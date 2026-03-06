@@ -163,7 +163,8 @@ export const transaction = pgTable("transaction", {
   amount: numeric().notNull(),
   description: text(),
   categoryId: uuid("category_id").references(() => category.id),
-  userId: uuid("user_id").notNull().references(() => userInNeonAuth.id, { onDelete: "cascade" }),                                                                                                                            createdAt: timestamp({ withTimezone: true, mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+  userId: uuid("user_id").notNull().references(() => userInNeonAuth.id, { onDelete: "cascade" }),
+  createdAt: timestamp({ withTimezone: true, mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp({ withTimezone: true, mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 })
 
