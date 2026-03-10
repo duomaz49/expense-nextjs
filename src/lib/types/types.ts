@@ -12,3 +12,5 @@ export type NewTransaction = InferInsertModel<typeof transaction>;
 
 
 export type UpdateBudget = Partial<NewBudget>;
+export type UpdateCategory = Partial<NewCategory>;
+export type UpdateTransaction = Partial<NewTransaction>;
