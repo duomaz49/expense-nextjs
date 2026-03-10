@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { NeonAuthUIProvider, UserButton } from '@neondatabase/auth/react';
+import { NeonAuthUIProvider } from '@neondatabase/auth/react';
 import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import {authClient} from "@/lib/auth/client";
@@ -36,9 +36,6 @@ export default function RootLayout({
         redirectTo="/account/settings"
         emailOTP
         >
-        <header className='flex justify-end items-center p-4 gap-4 h-16'>
-          <UserButton size="icon" />
-        </header>
         {children}
       </NeonAuthUIProvider>
       </body>
