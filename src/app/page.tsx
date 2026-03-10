@@ -1,5 +1,12 @@
-import { ComponentExample } from "@/components/component-example";
+import { getAllTransactions } from "@/actions/transactionAction";
 
-export default function Page() {
-return <ComponentExample />;
+export default async function Page() {
+  const transactions = await getAllTransactions();
+
+  return (
+    <div>
+      <h1>Transactions</h1>
+      <pre>{JSON.stringify(transactions, null, 2)}</pre>
+    </div>
+  );
 }
