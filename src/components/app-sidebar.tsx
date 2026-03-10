@@ -2,13 +2,12 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Wallet, Tags, ArrowLeftRight } from "lucide-react"
+import { LayoutDashboard, Wallet, Tags, ArrowLeftRight, DollarSign } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -26,13 +25,15 @@ export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
-        <h2 className="px-2 text-lg font-semibold">Expense Tracker</h2>
+        <div className="flex items-center gap-2 px-2">
+          <DollarSign className="size-5 shrink-0" />
+          <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">Expense Tracker</span>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
