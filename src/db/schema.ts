@@ -178,6 +178,7 @@ export const category = pgTable("category", {
 
 export const budget = pgTable("budget", {
   id: uuid().defaultRandom().primaryKey().notNull(),
+  name: text().notNull(),
   amount: numeric().notNull(),
   month: timestamp({ withTimezone: true, mode: 'string' }).notNull(),
   categoryId: uuid("category_id").notNull().references(() => category.id, { onDelete: "cascade" }),
