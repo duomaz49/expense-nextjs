@@ -1,28 +1,14 @@
+import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
+import { budget, category, transaction } from '@/db/schema';
 
-export interface Budget {
-  id: string;
-  name: string;
-  amount: number;
-  createdAt: Date;
-  updatedAt: Date;
-  category: Category;
-}
+export type Budget = InferSelectModel<typeof budget>;
+export type Category = InferSelectModel<typeof category>;
+export type Transaction = InferSelectModel<typeof transaction>;
 
-export interface Category {
-  id: string;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-  budgets: Budget[];
-  transactions: Transaction[];
-}
 
-export interface Transaction {
-  id: string;
-  amount: number;
-  description: string;
-  date: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  category: Category;
-}
+export type NewBudget = InferInsertModel<typeof budget>;
+export type NewCategory = InferInsertModel<typeof category>;
+export type NewTransaction = InferInsertModel<typeof transaction>;
+
+
+export type UpdateBudget = Partial<NewBudget>;
