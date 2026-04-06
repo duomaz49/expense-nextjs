@@ -45,7 +45,6 @@ export default async function Page() {
             <Button asChild>
               <Link
                 href="/auth/sign-up"
-                className="px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg shadow-lg"
               >
                 Start Tracking For Free
               </Link>
@@ -54,7 +53,6 @@ export default async function Page() {
             <Button asChild>
                 <Link
                 href="/auth/sign-in"
-                className="px-8 py-4 bg-white/20 text-white rounded-lg backdrop-blur-sm hover:bg-white/30 transition-colors font-semibold text-lg"
               >
                 Sign In
               </Link>

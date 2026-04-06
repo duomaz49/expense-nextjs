@@ -49,6 +49,7 @@
 }
 
 :root {
+  --neon-radius: 0.5rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -124,4 +125,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.rounded-md {
+  border-radius: 0;
+}
+
+.rounded-xl {
+  border-radius: 0;
 }
