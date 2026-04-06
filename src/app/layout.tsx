@@ -32,7 +32,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
       <NeonAuthUIProvider
-        authClient={authClient as any}
+        authClient={authClient as never}
+        social={{ providers: ['google'] }}
         redirectTo="/account/settings"
         emailOTP
         >
