@@ -5,7 +5,7 @@ export default async function Page() {
   return (
     <div
       className="min-h-screen bg-center bg-repeat relative"
-      style={{ backgroundImage: 'url(/bg_home.png)', backgroundSize: '100% auto' }}
+      style={{ backgroundImage: 'url(/bg_home.jpg)', backgroundSize: '100% auto' }}
     >
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/50"></div>
