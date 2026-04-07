@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import {Button} from "@/components/ui/button"
+import {Card, CardHeader, CardTitle, CardDescription} from "@/components/ui/card"
+
 export default async function Page() {
   return (
     <div
       className="main-page min-h-screen bg-center bg-repeat relative"
-      style={{ backgroundImage: 'url(/bg_home.jpg)', backgroundSize: '100% auto' }}
+      style={{backgroundImage: 'url(/bg_home.jpg)', backgroundSize: '100% auto'}}
     >
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/50"></div>
@@ -23,9 +24,9 @@ export default async function Page() {
               </Link>
             </Button>
             <Button asChild>
-                <Link href="/auth/sign-up">
-                  Get Started
-                </Link>
+              <Link href="/auth/sign-up">
+                Get Started
+              </Link>
             </Button>
           </div>
         </div>
