@@ -5,7 +5,7 @@ export default async function Page() {
   return (
     <div
       className="min-h-screen bg-center bg-repeat relative"
-      style={{ backgroundImage: 'url(/bg-home.jpg)', backgroundSize: '100% auto' }}
+      style={{ backgroundImage: 'url(/bg_home.png)', backgroundSize: '100% auto' }}
     >
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/50"></div>
@@ -14,7 +14,7 @@ export default async function Page() {
       <div className="relative z-10 container mx-auto p-4">
         {/* Header */}
         <div className="mb-12 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white drop-shadow-lg">Expense Tracker</h1>
+          <h1 className="text-2xl font-bold text-white drop-shadow-lg">OpenFinance</h1>
 
           <div className="flex gap-3">
             <Button asChild>
