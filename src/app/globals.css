@@ -134,3 +134,9 @@
 .rounded-xl {
   border-radius: 0;
 }
+
+.neon-auth-ui {
+  background: url("/bg_home.jpg") center center / cover no-repeat;
+  min-height: 100vh;
+  height: 100%;
+}

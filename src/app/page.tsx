@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 export default async function Page() {
   return (
     <div
-      className="min-h-screen bg-center bg-repeat relative"
+      className="main-page min-h-screen bg-center bg-repeat relative"
       style={{ backgroundImage: 'url(/bg_home.jpg)', backgroundSize: '100% auto' }}
     >
       {/* Dark overlay for better text readability */}

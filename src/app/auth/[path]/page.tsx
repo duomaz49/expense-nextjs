@@ -6,8 +6,12 @@ export default async function AuthPage({ params }: { params: Promise<{ path: str
   const { path } = await params;
 
   return (
-    <main className="container mx-auto flex grow flex-col items-center justify-center gap-3 self-center p-4 md:p-6">
-      <AuthView path={path} />
-    </main>
+    <div className="auth-page-wrapper neon-auth-ui min-h-screen">
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/50"></div>
+      <main className="relative z-10 container mx-auto flex grow flex-col items-center justify-center gap-3 self-center p-4 md:p-6 min-h-screen">
+        <AuthView path={path} />
+      </main>
+    </div>
   );
 }
