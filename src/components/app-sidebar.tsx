@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Wallet, Tags, ArrowLeftRight, DollarSign } from "lucide-react"
+import { LayoutDashboard, Wallet, Tags, ArrowLeftRight, DollarSign, Settings } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -19,6 +19,7 @@ const navItems = [
   { title: "Transactions", href: "/dashboard/transactions", icon: ArrowLeftRight },
   { title: "Budgets", href: "/dashboard/budgets", icon: Wallet },
   { title: "Categories", href: "/dashboard/categories", icon: Tags },
+  { title: "Settings", href: "/account/settings", icon: Settings },
 ]
 
 export function AppSidebar() {

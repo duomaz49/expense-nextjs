@@ -1,5 +1,5 @@
 import SharedLayout from "@/components/shared-layout";
 
-export default function DashBoardLayout({ children }: { children: React.ReactNode }) {
+export default function AccountLayout({ children }: { children: React.ReactNode }) {
   return <SharedLayout>{children}</SharedLayout>
 }
