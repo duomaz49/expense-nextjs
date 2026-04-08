@@ -41,24 +41,6 @@ export default async function Page() {
           <p className="text-l text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
             Track expenses, set budgets, and gain insights into your spending habits with our intuitive expense tracking platform.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild>
-              <Link
-                href="/auth/sign-up"
-              >
-                Start Tracking For Free
-              </Link>
-            </Button>
-
-            <Button asChild>
-                <Link
-                href="/auth/sign-in"
-              >
-                Sign In
-              </Link>
-            </Button>
-          </div>
         </div>
 
         {/* Features */}
