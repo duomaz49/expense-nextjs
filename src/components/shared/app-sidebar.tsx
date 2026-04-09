@@ -16,9 +16,9 @@ import {
 
 const navItems = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "Transactions", href: "/dashboard/transactions", icon: ArrowLeftRight },
-  { title: "Budgets", href: "/dashboard/budgets", icon: Wallet },
-  { title: "Categories", href: "/dashboard/categories", icon: Tags },
+  { title: "Transactions", href: "/transactions", icon: ArrowLeftRight },
+  { title: "Budgets", href: "/budgets", icon: Wallet },
+  { title: "Categories", href: "/categories", icon: Tags },
   { title: "Settings", href: "/account/settings", icon: Settings },
 ]
 

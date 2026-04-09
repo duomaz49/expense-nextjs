@@ -1,5 +1,5 @@
 import {SidebarInset, SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/shared/app-sidebar";
 import { UserButton } from '@neondatabase/auth/react';
 
 export default function SharedLayout({ children }: { children: React.ReactNode }) {
