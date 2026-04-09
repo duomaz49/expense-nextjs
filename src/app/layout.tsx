@@ -36,6 +36,8 @@ export default function RootLayout({
         social={{ providers: ['google'] }}
         redirectTo="/account/settings"
         emailOTP
+        defaultTheme="light"
+        enableSystem={false}
         >
         {children}
       </NeonAuthUIProvider>
