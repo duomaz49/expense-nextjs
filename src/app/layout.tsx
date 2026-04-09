@@ -37,7 +37,6 @@ export default function RootLayout({
         redirectTo="/account/settings"
         emailOTP
         defaultTheme="light"
-        enableSystem={false}
         >
         {children}
       </NeonAuthUIProvider>
