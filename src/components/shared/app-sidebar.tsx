@@ -30,7 +30,7 @@ export function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2">
           <DollarSign className="size-5 shrink-0" />
-          <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">Expense Tracker</span>
+          <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">OpenFinance</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
