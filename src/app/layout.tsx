@@ -34,7 +34,7 @@ export default function RootLayout({
       <NeonAuthUIProvider
         authClient={authClient as never}
         social={{ providers: ['google'] }}
-        redirectTo="/account/settings"
+        redirectTo="/dashboard"
         emailOTP
         defaultTheme="light"
         >
