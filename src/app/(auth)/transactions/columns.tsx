@@ -35,6 +35,7 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     id: "actions",
     header: "Actions",
+    size: 50,
     cell: ({ row }: CellContext<Transaction, unknown>) => {
       const transaction = row.original;
       return (
