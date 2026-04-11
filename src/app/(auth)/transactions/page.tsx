@@ -1,3 +1,6 @@
+"use client";
+
+import { trpc } from "@/lib/trpc/client";
 import {
   Table,
   TableBody,
@@ -9,16 +12,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const transactions = [
-  {
-    id: crypto.randomUUID(),
-    description: "Test",
-    date: "10.4.2026",
-    amount: 100,
-  },
-];
-
 export default function TransactionPage() {
+  const [ transactions ] = trpc.transaction.getAll.useSuspenseQuery();
+
   return (
     <div className="md:container md:mx-auto mt-5">
       <Table className="table-fixed">
