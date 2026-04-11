@@ -1,7 +1,9 @@
 "use client";
 
 import { ColumnDef, CellContext } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
 import type { Transaction } from "@/lib/types/types";
+import { Pencil, Trash2 } from "lucide-react";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -33,14 +35,26 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     id: "actions",
     header: "Actions",
-cell: ({ row }: CellContext<Transaction, unknown>) => {
+    cell: ({ row }: CellContext<Transaction, unknown>) => {
       const transaction = row.original;
       return (
         <div className="flex gap-2">
-          <button onClick={() => alert(`Edit: ${transaction.id}`)}>Edit</button>
-          <button onClick={() => alert(`Delete: ${transaction.id}`)}>
-            Delete
-          </button>
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            size="icon"
+            onClick={() => alert(`Edit: ${transaction.id}`)}
+          >
+            <Pencil />
+          </Button>
+          <Button
+            className="cursor-pointer"
+            variant="destructive"
+            size="icon"
+            onClick={() => alert(`Delete: ${transaction.id}`)}
+          >
+            <Trash2 />
+          </Button>
         </div>
       );
     },
