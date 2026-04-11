@@ -33,7 +33,7 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }: CellContext<Transaction, unknown>) => {
+cell: ({ row }: CellContext<Transaction, unknown>) => {
       const transaction = row.original;
       return (
         <div className="flex gap-2">
