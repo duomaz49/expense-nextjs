@@ -3,6 +3,7 @@ import { NeonAuthUIProvider } from '@neondatabase/auth/react';
 import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import {authClient} from "@/lib/auth/client";
+import { TRPCProvider } from "@/lib/trpc/client";
 
 const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-sans'});
 
@@ -31,15 +32,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      <NeonAuthUIProvider
-        authClient={authClient as never}
-        social={{ providers: ['google'] }}
-        redirectTo="/dashboard"
-        emailOTP
-        defaultTheme="light"
+      <TRPCProvider>
+        <NeonAuthUIProvider
+          authClient={authClient as never}
+          social={{ providers: ['google'] }}
+          redirectTo="/dashboard"
+          emailOTP
+          defaultTheme="light"
         >
-        {children}
-      </NeonAuthUIProvider>
+          {children}
+        </NeonAuthUIProvider>
+      </TRPCProvider>
       </body>
     </html>
   );
