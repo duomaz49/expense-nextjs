@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/table";
 
 export default function TransactionPage() {
-  const [ transactions ] = trpc.transaction.getAll.useSuspenseQuery();
+  const [transactions] = trpc.transaction.getAll.useSuspenseQuery();
 
   return (
     <div className="md:container md:mx-auto mt-5">
