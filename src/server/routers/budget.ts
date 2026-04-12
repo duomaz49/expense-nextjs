@@ -1,7 +1,7 @@
 import { router, protectedProcedure } from "../trpc";
 import { db } from "@/db";
 import { budget } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { z } from "zod";
 
 export const budgetRouter = router({
@@ -30,13 +30,13 @@ export const budgetRouter = router({
         }))
         .mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
-            await db.update(budget).set(data).where(eq(budget.id, id) && eq(budget.userId, ctx.user.id));
+            await db.update(budget).set(data).where(and(eq(budget.id, id), eq(budget.userId, ctx.user.id)));
         }),
 
     delete: protectedProcedure
         .input(z.string().check(z.uuid()))
         .mutation(async ({ input, ctx }) => {
-            await db.delete(budget).where(eq(budget.id, input) && eq(budget.userId, ctx.user.id));
+            await db.delete(budget).where(and(eq(budget.id, input), eq(budget.userId, ctx.user.id)));
         })
 
 })

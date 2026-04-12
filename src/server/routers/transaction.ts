@@ -1,7 +1,7 @@
 import { router, protectedProcedure } from "../trpc";
 import { db } from "@/db";
 import { transaction } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { z } from "zod";
 
 export const transactionRouter = router({
@@ -30,12 +30,12 @@ export const transactionRouter = router({
         }))
         .mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
-            await db.update(transaction).set(data).where(eq(transaction.id, id) && eq(transaction.userId, ctx.user.id));
+            await db.update(transaction).set(data).where(and(eq(transaction.id, id), eq(transaction.userId, ctx.user.id)));
         }),
 
     delete: protectedProcedure
         .input(z.string().check(z.uuid()))
         .mutation(async ({ input, ctx }) => {
-            await db.delete(transaction).where(eq(transaction.id, input) && eq(transaction.userId, ctx.user.id));
+            await db.delete(transaction).where(and(eq(transaction.id, input), eq(transaction.userId, ctx.user.id)));
         })
 });
