@@ -8,6 +8,7 @@ import ConfirmationModal from "@/components/shared/confirmation-modal";
 import { useState } from "react";
 import { trpc } from "@/lib/trpc/client";
 import type { Transaction } from "@/lib/types/types";
+import { ArrowUpDown } from "lucide-react";
 
 interface EditMeta {
   editingRowId: string | null;
@@ -96,7 +97,20 @@ export const ActionCell = ({
 export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "description",
-    header: "Description",
+    header: ({ column }) => {
+      return (
+        <div>
+          <Button
+            className="border-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Description
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ getValue, row, table }: CellContext<Transaction, unknown>) => {
       const meta = table.options.meta as EditMeta;
       if (meta?.editingRowId === row.original.id) {
@@ -113,7 +127,27 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "date",
-    header: "Date",
+    filterFn: (row, columnId, filterValue: [string, string]) => {
+      const [from, to] = filterValue;
+      const date = new Date(row.getValue(columnId) as string);
+      if (from && !isNaN(new Date(from).getTime()) && date < new Date(from)) return false;
+      if (to && !isNaN(new Date(to).getTime()) && date > new Date(to + "T23:59:59Z")) return false;
+      return true;
+    },
+    header: ({ column }) => {
+      return (
+        <div>
+          <Button
+            className="border-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Date
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ getValue, row, table }: CellContext<Transaction, unknown>) => {
       const meta = table.options.meta as EditMeta;
       if (meta?.editingRowId === row.original.id) {
@@ -132,7 +166,7 @@ export const columns: ColumnDef<Transaction>[] = [
       }
       return (
         <span>
-          {new Intl.DateTimeFormat("fi-FI", {
+          {new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -143,7 +177,20 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "amount",
-    header: "Amount",
+    header: ({ column }) => {
+      return (
+        <div>
+          <Button
+            className="border-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Amount
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ getValue, row, table }: CellContext<Transaction, unknown>) => {
       const meta = table.options.meta as EditMeta;
       if (meta?.editingRowId === row.original.id) {
@@ -158,6 +205,26 @@ export const columns: ColumnDef<Transaction>[] = [
         );
       }
       return <span>${parseFloat(getValue() as string).toFixed(2)}</span>;
+    },
+  },
+  {
+    accessorKey: "categoryName",
+    header: ({ column }) => {
+      return (
+        <div>
+          <Button
+            className="border-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Category
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ getValue }: CellContext<Transaction, unknown>) => {
+      return <span>{(getValue() as string) ?? "—"}</span>;
     },
   },
   {

@@ -1,12 +1,26 @@
 import { router, protectedProcedure } from "../trpc";
 import { db } from "@/db";
-import { transaction } from "@/db/schema";
+import { category, transaction } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { z } from "zod";
 
 export const transactionRouter = router({
     getAll: protectedProcedure.query(async ({ ctx }) => {
-        return db.select().from(transaction).where(eq(transaction.userId, ctx.user.id))
+        return db
+            .select({
+                id: transaction.id,
+                date: transaction.date,
+                amount: transaction.amount,
+                description: transaction.description,
+                categoryId: transaction.categoryId,
+                categoryName: category.name,
+                userId: transaction.userId,
+                createdAt: transaction.createdAt,
+                updatedAt: transaction.updatedAt,
+            })
+            .from(transaction)
+            .leftJoin(category, eq(transaction.categoryId, category.id))
+            .where(eq(transaction.userId, ctx.user.id));
     }),
 
     add: protectedProcedure
