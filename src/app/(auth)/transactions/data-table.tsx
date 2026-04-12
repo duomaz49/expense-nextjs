@@ -27,6 +27,9 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
+import { useState } from "react";
+import type { Transaction } from "@/lib/types/types";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -36,11 +39,29 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [editingRowId, setEditingRowId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState<Partial<Transaction>>({});
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    meta: {
+      editingRowId,
+      editDraft,
+      startEdit: (row: Transaction) => {
+        setEditingRowId(row.id);
+        setEditDraft(row);
+      },
+      cancelEdit: () => {
+        setEditingRowId(null);
+        setEditDraft({});
+      },
+      setDraftField: (field: keyof Transaction, value: unknown) => {
+        setEditDraft((prev) => ({ ...prev, [field]: value }));
+      },
+    },
   });
 
   const getPageRange = (
