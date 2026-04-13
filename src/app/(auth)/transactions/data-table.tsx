@@ -144,28 +144,31 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center gap-2 py-4">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">From</span>
-          <Input
-            type="date"
-            value={dateFrom}
-            onChange={(e) => {
-              setDateFrom(e.target.value);
-              handleDateFilter(e.target.value, dateTo);
-            }}
-            className="w-36"
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">To</span>
-          <Input
-            type="date"
-            value={dateTo}
-            onChange={(e) => {
-              setDateTo(e.target.value);
-              handleDateFilter(dateFrom, e.target.value);
-            }}
-            className="w-36"
-          />
+          <span className="text-sm">Table filters:</span>
+          <div>
+            <span className="text-xs text-muted-foreground me-1">From</span>
+            <Input
+              type="date"
+              value={dateFrom}
+              onChange={(e) => {
+                setDateFrom(e.target.value);
+                handleDateFilter(e.target.value, dateTo);
+              }}
+              className="w-36"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">To</span>
+            <Input
+              type="date"
+              value={dateTo}
+              onChange={(e) => {
+                setDateTo(e.target.value);
+                handleDateFilter(dateFrom, e.target.value);
+              }}
+              className="w-36"
+            />
+          </div>
         </div>
         <Select
           value={categoryFilter}
@@ -212,9 +215,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   );
                 })}
