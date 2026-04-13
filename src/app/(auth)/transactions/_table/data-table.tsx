@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import type { Transaction } from "@/lib/types/types";
 
@@ -200,6 +200,13 @@ export function DataTable<TData, TValue>({
             Reset filters
           </Button>
         )}
+        <Button
+          className="cursor-pointer ml-auto"
+          size="lg"
+          onClick={() => alert("Tried to Add lol :D")}
+        >
+          <Plus /> New Transaction
+        </Button>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
