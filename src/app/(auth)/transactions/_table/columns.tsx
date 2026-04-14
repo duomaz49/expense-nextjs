@@ -9,6 +9,7 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc/client";
 import type { Transaction } from "@/lib/types/types";
 import { ArrowUpDown } from "lucide-react";
+import { useConfirmationModalStore } from "@/store/confirmation-modal-store";
 
 interface EditMeta {
   editingRowId: string | null;
@@ -22,7 +23,7 @@ export const ActionCell = ({
   row,
   table,
 }: CellContext<Transaction, unknown>) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const { openModal } = useConfirmationModalStore();
   const transaction = row.original;
   const utils = trpc.useUtils();
 
@@ -32,7 +33,6 @@ export const ActionCell = ({
   const deleteTransaction = trpc.transaction.delete.useMutation({
     onSuccess: () => {
       utils.transaction.getAll.invalidate();
-      setOpen(false);
     },
   });
 
@@ -80,16 +80,15 @@ export const ActionCell = ({
         className="cursor-pointer"
         variant="destructive"
         size="icon"
-        onClick={() => setOpen(true)}
+        onClick={() =>
+          openModal({
+            title: "Delete transaction?",
+            onConfirm: () => deleteTransaction.mutate(transaction.id),
+          })
+        }
       >
         <Trash2 />
       </Button>
-      <ConfirmationModal
-        open={open}
-        onOpenChange={setOpen}
-        onCancel={() => setOpen(!open)}
-        onConfirm={() => deleteTransaction.mutate(transaction.id)}
-      />
     </div>
   );
 };
@@ -130,8 +129,14 @@ export const columns: ColumnDef<Transaction>[] = [
     filterFn: (row, columnId, filterValue: [string, string]) => {
       const [from, to] = filterValue;
       const date = new Date(row.getValue(columnId) as string);
-      if (from && !isNaN(new Date(from).getTime()) && date < new Date(from)) return false;
-      if (to && !isNaN(new Date(to).getTime()) && date > new Date(to + "T23:59:59Z")) return false;
+      if (from && !isNaN(new Date(from).getTime()) && date < new Date(from))
+        return false;
+      if (
+        to &&
+        !isNaN(new Date(to).getTime()) &&
+        date > new Date(to + "T23:59:59Z")
+      )
+        return false;
       return true;
     },
     header: ({ column }) => {

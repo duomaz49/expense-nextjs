@@ -8,50 +8,21 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useConfirmationModalStore } from "@/store/confirmation-modal-store";
 
-interface ModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  title?: string;
-  description?: string;
-  cancelText?: string;
-  continueText?: string;
-  onCancel?: () => void;
-  onConfirm: () => void;
-}
-
-export default function ConfirmationModal({
-  open,
-  onOpenChange,
-  title,
-  description,
-  cancelText,
-  continueText,
-  onCancel,
-  onConfirm,
-}: ModalProps) {
-  const defaultTitle = "Are you absolutely sure?";
-  const defaultDescription =
-    "This action cannot be undone. This will permanently delete your account and remove your data from our servers.";
-  const defaultCancel = "Cancel";
-  const defaultContinue = "Continue";
-
+export default function ConfirmationModal() {
+  const { isOpen, title, description, onConfirm, closeModal } =
+    useConfirmationModalStore();
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog open={isOpen} onOpenChange={closeModal}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title ? title : defaultTitle}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {description ? description : defaultDescription}
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={onCancel}>
-            {cancelText ? cancelText : defaultCancel}
-          </AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>
-            {continueText ? continueText : defaultContinue}
-          </AlertDialogAction>
+          <AlertDialogCancel onClick={closeModal}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={onConfirm}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
