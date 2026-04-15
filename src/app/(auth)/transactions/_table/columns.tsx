@@ -4,12 +4,11 @@ import { ColumnDef, CellContext } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Check, Pencil, Trash2, X } from "lucide-react";
-import ConfirmationModal from "@/components/shared/confirmation-modal";
-import { useState } from "react";
 import { trpc } from "@/lib/trpc/client";
 import type { Transaction } from "@/lib/types/types";
 import { ArrowUpDown } from "lucide-react";
 import { useConfirmationModalStore } from "@/store/confirmation-modal-store";
+import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
 
 interface EditMeta {
   editingRowId: string | null;
@@ -24,6 +23,7 @@ export const ActionCell = ({
   table,
 }: CellContext<Transaction, unknown>) => {
   const { openModal } = useConfirmationModalStore();
+  const { openModal } = useNewTransactionModalStore();
   const transaction = row.original;
   const utils = trpc.useUtils();
 
