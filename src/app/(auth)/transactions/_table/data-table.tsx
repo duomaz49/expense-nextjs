@@ -43,6 +43,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import type { Transaction } from "@/lib/types/types";
+import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,6 +54,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const { openNewTransactionModal } = useNewTransactionModalStore();
   const [editingRowId, setEditingRowId] = useState<string | null>(null);
   const [editDraft, setEditDraft] = useState<Partial<Transaction>>({});
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -203,7 +205,7 @@ export function DataTable<TData, TValue>({
         <Button
           className="cursor-pointer ml-auto"
           size="lg"
-          onClick={() => alert("Tried to Add lol :D")}
+          onClick={() => openNewTransactionModal()}
         >
           <Plus /> New Transaction
         </Button>
@@ -222,9 +224,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}

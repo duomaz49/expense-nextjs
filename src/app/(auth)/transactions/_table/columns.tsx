@@ -8,7 +8,6 @@ import { trpc } from "@/lib/trpc/client";
 import type { Transaction } from "@/lib/types/types";
 import { ArrowUpDown } from "lucide-react";
 import { useConfirmationModalStore } from "@/store/confirmation-modal-store";
-import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
 
 interface EditMeta {
   editingRowId: string | null;
@@ -22,8 +21,7 @@ export const ActionCell = ({
   row,
   table,
 }: CellContext<Transaction, unknown>) => {
-  const { openModal } = useConfirmationModalStore();
-  const { openModal } = useNewTransactionModalStore();
+  const { openConfirmModal } = useConfirmationModalStore();
   const transaction = row.original;
   const utils = trpc.useUtils();
 
@@ -81,7 +79,7 @@ export const ActionCell = ({
         variant="destructive"
         size="icon"
         onClick={() =>
-          openModal({
+          openConfirmModal({
             title: "Delete transaction?",
             onConfirm: () => deleteTransaction.mutate(transaction.id),
           })

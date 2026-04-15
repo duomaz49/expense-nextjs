@@ -72,7 +72,7 @@ export default function NewTransactionModal() {
                     <div className="grid gap-2">
                         <Label>Category</Label>
                         <Select value={categoryId} onValueChange={setCategoryId}>
-                            <SelectTrigger><SelectValue placeholder="Select category"></SelectValue></SelectTrigger>
+                            <SelectTrigger className="w-100"><SelectValue placeholder="Select category"></SelectValue></SelectTrigger>
                             <SelectContent>
                                 {categories.map((c) => (
                                     <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
@@ -84,7 +84,7 @@ export default function NewTransactionModal() {
                 <DialogFooter>
                     <Button className="min-w-20" type="submit" onClick={handleSubmit}>
                         {addTransaction.isPending ? <Spinner /> : "Save"}
-                    </Button>j
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
