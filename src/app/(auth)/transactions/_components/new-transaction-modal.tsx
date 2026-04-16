@@ -9,7 +9,17 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import {
-    Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from "@/components/ui/tabs"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -48,45 +58,56 @@ export default function NewTransactionModal() {
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
             <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>
-                        New transaction
-                    </DialogTitle>
-                    <DialogDescription>
-                        Add a new transaction to your records.
-                    </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid gap-2">
-                        <Label htmlFor="date">Date</Label>
-                        <Input id="date" type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} />
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="date">Amount</Label>
-                        <Input id="amount" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="date">Description</Label>
-                        <Input id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                    </div>
-                    <div className="grid gap-2">
-                        <Label>Category</Label>
-                        <Select value={categoryId} onValueChange={setCategoryId}>
-                            <SelectTrigger className="w-100"><SelectValue placeholder="Select category"></SelectValue></SelectTrigger>
-                            <SelectContent>
-                                {categories.map((c) => (
-                                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-                <DialogFooter>
-                    <Button className="min-w-20" type="submit" onClick={handleSubmit}>
-                        {addTransaction.isPending ? <Spinner /> : "Save"}
-                    </Button>
-                </DialogFooter>
+                <Tabs defaultValue="create-transaction" className="sm:max-w-[425px]">
+                    <TabsList variant="line" className="mt-4 mx-auto">
+                        <TabsTrigger value="create-transaction">Create Transaction</TabsTrigger>
+                        <TabsTrigger value="import-transaction">Import Transactions</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="create-transaction">
+                        <DialogHeader>
+                            <DialogTitle>
+                                New transaction
+                            </DialogTitle>
+                            <DialogDescription>
+                                Add a new transaction to your records.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                            <div className="grid gap-2">
+                                <Label htmlFor="date">Date</Label>
+                                <Input id="date" type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="date">Amount</Label>
+                                <Input id="amount" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="date">Description</Label>
+                                <Input id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label>Category</Label>
+                                <Select value={categoryId} onValueChange={setCategoryId}>
+                                    <SelectTrigger className="w-100"><SelectValue placeholder="Select category"></SelectValue></SelectTrigger>
+                                    <SelectContent>
+                                        {categories.map((c) => (
+                                            <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <Button className="min-w-20" type="submit" onClick={handleSubmit}>
+                                {addTransaction.isPending ? <Spinner /> : "Save"}
+                            </Button>
+                        </DialogFooter>
+                    </TabsContent>
+                    <TabsContent value="import-transaction">
+                        <div>LOL!!</div>
+                    </TabsContent>
+                </Tabs>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     );
 }
