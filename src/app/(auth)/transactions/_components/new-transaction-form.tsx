@@ -55,7 +55,7 @@ export default function NewTransactionForm() {
       date: new Date(values.date).toISOString(),
     });
   };
-  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
