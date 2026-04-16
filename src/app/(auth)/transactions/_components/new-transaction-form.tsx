@@ -24,10 +24,10 @@ export default function NewTransactionForm() {
     const utils = trpc.useUtils();
     const { data: categories = [] } = trpc.category.getAll.useQuery();
 
-    const [date, setDate] = useState<string>("");
-    const [amount, setAmount] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
-    const [categoryId, setCategoryId] = useState<string>("");
+    const form = useForm<FormValues>({
+        resolver: zodResolver(schema),
+        defaultValues: { date: "", amount: "", description: "", categoryId: "" }
+    })
 
     const addTransaction = trpc.transaction.add.useMutation({
         onSuccess: () => {
@@ -35,44 +35,75 @@ export default function NewTransactionForm() {
             closeModal();
         }
     });
-    const handleSubmit = () => {
+
+    const onSubmit = (values: FormValues) => {
         addTransaction.mutate({
-            date: new Date(date).toISOString(),
-            amount,
-            description,
-            categoryId: categoryId || undefined,
+            ...values,
+            date: new Date(values.date).toDateString(),
         });
     };
     return (
-        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-            <div className="grid gap-4 py-4">
-                <div className="grid gap-2">
-                    <Label htmlFor="date">Date</Label>
-                    <Input id="date" type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} />
-                </div>
-                <div className="grid gap-2">
-                    <Label htmlFor="date">Amount</Label>
-                    <Input id="amount" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
-                </div>
-                <div className="grid gap-2">
-                    <Label htmlFor="date">Description</Label>
-                    <Input id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                </div>
-                <div className="grid gap-2">
-                    <Label>Category</Label>
-                    <Select value={categoryId} onValueChange={setCategoryId}>
-                        <SelectTrigger className="w-100"><SelectValue placeholder="Select category"></SelectValue></SelectTrigger>
-                        <SelectContent>
-                            {categories.map((c) => (
-                                <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-            </div>
-            <Button className="min-w-20" type="submit" disabled={addTransaction.isPending}>
-                {addTransaction.isPending ? <Spinner /> : "Save"}
-            </Button>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
+                    <FormField
+                        control={form.control}
+                        name="date"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Date</FormLabel>
+                                <FormControl><Input type="datetime-local" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="amount"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Amount</FormLabel>
+                                <FormControl><Input type="number" {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Description</FormLabel>
+                                <FormControl><Input {...field} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="categoryId"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Category</FormLabel>
+                                <Select value={field.value} onValueChange={field.onChange}>
+                                    <FormControl>
+                                        <SelectTrigger><SelectValue placeholder="Select category" /></SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {categories.map((c) => (
+                                            <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button className="min-w-20" type="submit" disabled={addTransaction.isPending}>
+                        {addTransaction.isPending ? <Spinner /> : "Save"}
+                    </Button>
+                </form>
+            </Form>
         </form>
     )
 }
