@@ -1,19 +1,23 @@
-'use-client'
-
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+"use client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { trpc } from "@/lib/trpc/client";
-import { useState } from "react";
 import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
+
+const schema = z.object({
+    date: z.string().min(1, "Date is required"),
+    amount: z.string().min(1, "Amount is required"),
+    description: z.string().min(1, "Description is required"),
+    categoryId: z.string().optional(),
+})
+
+type FormValues = z.infer<typeof schema>;
 
 export default function NewTransactionForm() {
     const { closeModal } = useNewTransactionModalStore();
@@ -36,7 +40,7 @@ export default function NewTransactionForm() {
             date: new Date(date).toISOString(),
             amount,
             description,
-            categoryId,
+            categoryId: categoryId || undefined,
         });
     };
     return (

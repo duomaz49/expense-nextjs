@@ -28,7 +28,7 @@ export const transactionRouter = router({
             date: z.string().check(z.iso.datetime()),
             amount: z.string(),
             description: z.string(),
-            categoryId: z.string().check(z.uuid())
+            categoryId: z.string().check(z.uuid()).optional()
         }))
         .mutation(async ({ input, ctx }) => {
             await db.insert(transaction).values({ ...input, userId: ctx.user.id })
@@ -40,7 +40,7 @@ export const transactionRouter = router({
             date: z.string().check(z.iso.datetime()),
             amount: z.string(),
             description: z.string(),
-            categoryId: z.string().check(z.uuid())
+            categoryId: z.string().check(z.uuid()).optional()
         }))
         .mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;

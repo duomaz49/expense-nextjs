@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/tabs"
 import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
 import NewTransactionForm from "./new-transaction-form";
-import FileImportTransaction from "./file-import-transaction";
+import ImportTransaction from "./import-transaction";
 
 export default function NewTransactionModal() {
     const { isOpen, closeModal } = useNewTransactionModalStore();
@@ -47,7 +47,7 @@ export default function NewTransactionModal() {
                             </DialogDescription>
                         </DialogHeader>
                         <div>LOL!!</div>
-                        <FileImportTransaction />
+                        <ImportTransaction />
                     </TabsContent>
                 </Tabs>
             </DialogContent>
