@@ -105,7 +105,7 @@ export default function NewTransactionForm() {
               <FormLabel>Category</FormLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-100">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                 </FormControl>
