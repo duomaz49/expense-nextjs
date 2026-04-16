@@ -46,7 +46,6 @@ export default function NewTransactionModal() {
                                 Bulk import transactions in csv file
                             </DialogDescription>
                         </DialogHeader>
-                        <div>LOL!!</div>
                         <ImportTransaction />
                     </TabsContent>
                 </Tabs>
