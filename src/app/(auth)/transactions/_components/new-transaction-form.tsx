@@ -52,7 +52,7 @@ export default function NewTransactionForm() {
   const onSubmit = (values: FormValues) => {
     addTransaction.mutate({
       ...values,
-      date: new Date(values.date).toDateString(),
+      date: new Date(values.date).toISOString(),
     });
   };
   return (
