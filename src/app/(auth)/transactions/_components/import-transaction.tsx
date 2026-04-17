@@ -11,10 +11,10 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { trpc } from "@/lib/trpc/client";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import Papa from "papaparse";
+import { StagedRow, useImportPreviewStore } from "@/store/import-preview-store";
+import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
 
 const MAX_SIZE = 1000000;
 
@@ -34,10 +34,14 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-type CsvRow = {
-  Kirjauspäivä: string;
-  Määrä: string;
-  Otsikko: string;
+//Supports only NORDEA eng and fin csv atmO
+const HEADER_MAP: Record<string, "date" | "amount" | "description"> = {
+  kirjauspäivä: "date",
+  "booking date": "date",
+  määrä: "amount",
+  amount: "amount",
+  otsikko: "description",
+  title: "description",
 };
 
 export default function ImportTransaction() {
@@ -45,26 +49,25 @@ export default function ImportTransaction() {
     resolver: zodResolver(schema),
     defaultValues: { file: undefined },
   });
-  const utils = trpc.useUtils();
-  const addTransaction = trpc.transaction.add.useMutation();
+  const openImportPreview = useImportPreviewStore((s) => s.openImportPreview);
+  const closeNewTransaction = useNewTransactionModalStore((s) => s.closeModal);
 
   const onSubmit = (values: FormValues) => {
-    Papa.parse<CsvRow>(values.file, {
+    Papa.parse<Record<string, string>>(values.file, {
       header: true,
       delimiter: ";",
       skipEmptyLines: true,
-      complete: async ({ data }) => {
-        console.log(data);
-        await Promise.all(
-          data.map((row) =>
-            addTransaction.mutateAsync({
-              date: new Date(row.Kirjauspäivä.replace(/\//g, "-")).toISOString(),
-              amount: row.Määrä.trim(),
-              description: row.Otsikko?.trim() ?? "",
-            }),
-          ),
-        );
-        await utils.transaction.getAll.invalidate();
+      complete: ({ data }) => {
+        const rows: StagedRow[] = data.map((row) => {
+          const out: Partial<StagedRow> = { categoryId: null };
+          for (const [header, value] of Object.entries(row)) {
+            const field = HEADER_MAP[header.trim().toLowerCase()];
+            if (field) out[field] = value;
+          }
+          return out as StagedRow;
+        });
+        openImportPreview(rows);
+        closeNewTransaction();
         form.reset();
       },
     });
@@ -90,11 +93,8 @@ export default function ImportTransaction() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={addTransaction.isPending}>
-          {addTransaction.isPending ? <Spinner /> : "Import"}
-        </Button>
+        <Button type="submit">Preview</Button>
       </form>
     </Form>
   );
 }
-

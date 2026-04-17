@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface ConfirmationModalStore {
+interface ConfirmationModalStoreState {
     isOpen: boolean
     title: string
     description: string
@@ -9,7 +9,7 @@ interface ConfirmationModalStore {
     closeModal: () => void
 }
 
-export const useConfirmationModalStore = create<ConfirmationModalStore>((set) => ({
+export const useConfirmationModalStore = create<ConfirmationModalStoreState>((set) => ({
     isOpen: false,
     title: "Are you sure?",
     description: "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
