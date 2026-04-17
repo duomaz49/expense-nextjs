@@ -207,7 +207,14 @@ export const columns: ColumnDef<Transaction>[] = [
           />
         );
       }
-      return <span>${parseFloat(getValue() as string).toFixed(2)}</span>;
+      return (
+        <span>
+          {new Intl.NumberFormat("fi-FI", {
+            style: "currency",
+            currency: "EUR",
+          }).format(parseFloat(getValue() as string))}
+        </span>
+      );
     },
   },
   {
