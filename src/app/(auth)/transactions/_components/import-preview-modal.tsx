@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,25 +10,30 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { Label } from "@/components/ui/label";
 import { useImportPreviewStore } from "@/store/import-preview-store";
 import { trpc } from "@/lib/trpc/client";
+import CategorySelect from "@/components/shared/category-select";
 
 export default function ImportPreviewModal() {
   const { isOpen, rows, closeModal } = useImportPreviewStore();
   const utils = trpc.useUtils();
   const addTransaction = trpc.transaction.add.useMutation();
+  const [categoryId, setCategoryId] = useState<string>("");
 
   const onConfirm = async () => {
     await Promise.all(
       rows.map((r) =>
         addTransaction.mutateAsync({
           date: new Date(r.date.replace(/\//g, "-")).toISOString(),
-          amount: r.amount.trim(),
+          amount: r.amount.trim().replace(",", "."),
           description: r.description?.trim() ?? "",
+          categoryId: categoryId || undefined,
         }),
       ),
     );
     await utils.transaction.getAll.invalidate();
+    setCategoryId("");
     closeModal();
   };
 
@@ -40,6 +46,10 @@ export default function ImportPreviewModal() {
             {rows.length} rows ready to import.
           </DialogDescription>
         </DialogHeader>
+        <div className="grid gap-2">
+          <Label>Category (applied to all)</Label>
+          <CategorySelect value={categoryId} onChange={setCategoryId} />
+        </div>
         <div className="max-h-80 overflow-auto text-sm">
           <div className="grid grid-cols-3 gap-2 border-b py-1 font-medium text-muted-foreground sticky top-0 bg-background">
             <span>Date</span>

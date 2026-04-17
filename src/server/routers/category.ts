@@ -11,10 +11,14 @@ export const categoryRouter = router({
 
   add: protectedProcedure
     .input(z.object({
-      name: z.string(),
+      name: z.string().min(1),
     }))
     .mutation(async ({ input, ctx }) => {
-      await db.insert(category).values({ ...input, userId: ctx.user.id });
+      const [row] = await db
+        .insert(category)
+        .values({ ...input, userId: ctx.user.id })
+        .returning();
+      return row;
     }),
 
   edit: protectedProcedure

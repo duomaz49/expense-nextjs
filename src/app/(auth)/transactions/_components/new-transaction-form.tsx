@@ -12,16 +12,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { trpc } from "@/lib/trpc/client";
 import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
+import CategorySelect from "@/components/shared/category-select";
 
 const schema = z.object({
   date: z.string().min(1, "Date is required"),
@@ -35,7 +29,6 @@ type FormValues = z.infer<typeof schema>;
 export default function NewTransactionForm() {
   const { closeModal } = useNewTransactionModalStore();
   const utils = trpc.useUtils();
-  const { data: categories = [] } = trpc.category.getAll.useQuery();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -104,20 +97,13 @@ export default function NewTransactionForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Category</FormLabel>
-              <Select value={field.value} onValueChange={field.onChange}>
-                <FormControl>
-                  <SelectTrigger className="w-100">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {categories.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>
-                      {c.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <FormControl>
+                <CategorySelect
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  className="w-100"
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
