@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "@/lib/trpc/client";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import Papa from "papaparse";
 
 const MAX_SIZE = 1000000;
@@ -34,9 +35,9 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 type CsvRow = {
-  date: string;
-  amount: string;
-  description: string;
+  Kirjauspäivä: string;
+  Määrä: string;
+  Otsikko: string;
 };
 
 export default function ImportTransaction() {
@@ -50,15 +51,16 @@ export default function ImportTransaction() {
   const onSubmit = (values: FormValues) => {
     Papa.parse<CsvRow>(values.file, {
       header: true,
+      delimiter: ";",
       skipEmptyLines: true,
-      transformHeader: (h) => h.trim().toLowerCase(),
       complete: async ({ data }) => {
+        console.log(data);
         await Promise.all(
           data.map((row) =>
             addTransaction.mutateAsync({
-              date: new Date(row.date).toISOString(),
-              amount: row.amount.trim(),
-              description: row.description?.trim() ?? "",
+              date: new Date(row.Kirjauspäivä.replace(/\//g, "-")).toISOString(),
+              amount: row.Määrä.trim(),
+              description: row.Otsikko?.trim() ?? "",
             }),
           ),
         );
@@ -89,9 +91,10 @@ export default function ImportTransaction() {
           )}
         />
         <Button type="submit" disabled={addTransaction.isPending}>
-          Import
+          {addTransaction.isPending ? <Spinner /> : "Import"}
         </Button>
       </form>
     </Form>
   );
 }
+
