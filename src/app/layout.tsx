@@ -4,7 +4,6 @@ import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import {authClient} from "@/lib/auth/client";
 import { TRPCProvider } from "@/lib/trpc/client";
-import { Toaster } from "@/components/ui/sonner";
 
 const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-sans'});
 
@@ -42,7 +41,6 @@ export default function RootLayout({
           defaultTheme="light"
         >
           {children}
-          <Toaster richColors position="top-right" />
         </NeonAuthUIProvider>
       </TRPCProvider>
       </body>
