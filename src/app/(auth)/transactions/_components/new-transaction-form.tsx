@@ -22,6 +22,7 @@ const schema = z.object({
   amount: z.string().min(1, "Amount is required"),
   description: z.string().min(1, "Description is required"),
   categoryId: z.string().optional(),
+  type: z.enum(["income", "expense"]),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -32,7 +33,13 @@ export default function NewTransactionForm() {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { date: "", amount: "", description: "", categoryId: "" },
+    defaultValues: {
+      date: "",
+      amount: "",
+      description: "",
+      categoryId: "",
+      type: "expense",
+    },
   });
 
   const addTransaction = trpc.transaction.add.useMutation({
@@ -43,9 +50,13 @@ export default function NewTransactionForm() {
   });
 
   const onSubmit = (values: FormValues) => {
+    const magnitude = Math.abs(parseFloat(values.amount));
+    const signed = values.type === "expense" ? -magnitude : magnitude;
     addTransaction.mutate({
-      ...values,
       date: new Date(values.date).toISOString(),
+      amount: signed.toString(),
+      description: values.description,
+      categoryId: values.categoryId,
     });
   };
 
@@ -67,12 +78,42 @@ export default function NewTransactionForm() {
         />
         <FormField
           control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type</FormLabel>
+              <FormControl>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant={field.value === "expense" ? "default" : "outline"}
+                    className="flex-1"
+                    onClick={() => field.onChange("expense")}
+                  >
+                    Expense
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={field.value === "income" ? "default" : "outline"}
+                    className="flex-1"
+                    onClick={() => field.onChange("income")}
+                  >
+                    Income
+                  </Button>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="amount"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Amount</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input type="number" min="0" step="0.01" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

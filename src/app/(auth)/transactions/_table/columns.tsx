@@ -180,6 +180,8 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "amount",
+    sortingFn: (a, b) =>
+      parseFloat(a.getValue("amount")) - parseFloat(b.getValue("amount")),
     header: ({ column }) => {
       return (
         <div>
