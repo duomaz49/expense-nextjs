@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc/client";
 import { columns, DataTable } from "./_table";
 import ConfirmationModal from "@/components/shared/confirmation-modal";
 import NewTransactionModal from "./_components/new-transaction-modal";
+import ImportPreviewModal from "./_components/import-preview-modal";
 
 export default function TransactionPage() {
   const [transactions] = trpc.transaction.getAll.useSuspenseQuery();
@@ -14,6 +15,7 @@ export default function TransactionPage() {
       <DataTable columns={columns} data={transactions} />
       <ConfirmationModal />
       <NewTransactionModal />
+      <ImportPreviewModal />
     </div>
   );
 }
