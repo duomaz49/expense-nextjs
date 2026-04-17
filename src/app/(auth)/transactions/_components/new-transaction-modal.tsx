@@ -38,7 +38,7 @@ export default function NewTransactionModal() {
             <DialogHeader>
               <DialogTitle>Import transactions</DialogTitle>
               <DialogDescription>
-                Bulk import transactions in csv file
+                Bulk import transactions in csv file, currently support csv format from Nordea
               </DialogDescription>
             </DialogHeader>
             <ImportTransaction />
