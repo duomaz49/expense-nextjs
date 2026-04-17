@@ -14,27 +14,30 @@ import { Label } from "@/components/ui/label";
 import { useImportPreviewStore } from "@/store/import-preview-store";
 import { trpc } from "@/lib/trpc/client";
 import CategorySelect from "@/components/shared/category-select";
+import { toast } from "sonner";
 
 export default function ImportPreviewModal() {
   const { isOpen, rows, closeModal } = useImportPreviewStore();
   const utils = trpc.useUtils();
-  const addTransaction = trpc.transaction.add.useMutation();
+  const addMany = trpc.transaction.addMany.useMutation();
   const [categoryId, setCategoryId] = useState<string>("");
 
   const onConfirm = async () => {
-    await Promise.all(
-      rows.map((r) =>
-        addTransaction.mutateAsync({
-          date: new Date(r.date.replace(/\//g, "-")).toISOString(),
-          amount: r.amount.trim().replace(",", "."),
-          description: r.description?.trim() ?? "",
-          categoryId: categoryId || undefined,
-        }),
-      ),
-    );
-    await utils.transaction.getAll.invalidate();
-    setCategoryId("");
-    closeModal();
+    const payload = rows.map((r) => ({
+      date: new Date(r.date.replace(/\//g, "-")).toISOString(),
+      amount: r.amount.trim().replace(",", "."),
+      description: r.description?.trim() ?? "",
+      categoryId: categoryId || undefined,
+    }));
+    try {
+      await addMany.mutateAsync({ rows: payload });
+      await utils.transaction.getAll.invalidate();
+      toast.success(`Imported ${payload.length} transactions`);
+      setCategoryId("");
+      closeModal();
+    } catch {
+      toast.error("Import failed");
+    }
   };
 
   return (
@@ -68,8 +71,8 @@ export default function ImportPreviewModal() {
           <Button variant="outline" onClick={closeModal}>
             Cancel
           </Button>
-          <Button onClick={onConfirm} disabled={addTransaction.isPending}>
-            {addTransaction.isPending ? <Spinner /> : "Import"}
+          <Button onClick={onConfirm} disabled={addMany.isPending}>
+            {addMany.isPending ? <Spinner /> : "Import"}
           </Button>
         </DialogFooter>
       </DialogContent>

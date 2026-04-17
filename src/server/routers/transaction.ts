@@ -34,6 +34,22 @@ export const transactionRouter = router({
             await db.insert(transaction).values({ ...input, userId: ctx.user.id })
         }),
 
+    addMany: protectedProcedure
+        .input(z.object({
+            rows: z.array(z.object({
+                date: z.string().check(z.iso.datetime()),
+                amount: z.string(),
+                description: z.string(),
+                categoryId: z.string().check(z.uuid()).optional()
+            })).min(1)
+        }))
+        .mutation(async ({ input, ctx }) => {
+            const values = input.rows.map((r) => ({ ...r, userId: ctx.user.id }));
+            await db.transaction(async (tx) => {
+                await tx.insert(transaction).values(values);
+            });
+        }),
+
     edit: protectedProcedure
         .input(z.object({
             id: z.string().check(z.uuid()),

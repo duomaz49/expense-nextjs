@@ -16,6 +16,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { trpc } from "@/lib/trpc/client";
 import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
 import CategorySelect from "@/components/shared/category-select";
+import { toast } from "sonner";
 
 const schema = z.object({
   date: z.string().min(1, "Date is required"),
@@ -45,7 +46,11 @@ export default function NewTransactionForm() {
   const addTransaction = trpc.transaction.add.useMutation({
     onSuccess: () => {
       utils.transaction.getAll.invalidate();
+      toast.success("Transaction added");
       closeModal();
+    },
+    onError: () => {
+      toast.error("Failed to add transaction");
     },
   });
 

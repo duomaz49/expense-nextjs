@@ -8,6 +8,7 @@ import { trpc } from "@/lib/trpc/client";
 import type { Transaction } from "@/lib/types/types";
 import { ArrowUpDown } from "lucide-react";
 import { useConfirmationModalStore } from "@/store/confirmation-modal-store";
+import { toast } from "sonner";
 
 interface EditMeta {
   editingRowId: string | null;
@@ -31,6 +32,10 @@ export const ActionCell = ({
   const deleteTransaction = trpc.transaction.delete.useMutation({
     onSuccess: () => {
       utils.transaction.getAll.invalidate();
+      toast.success("Transaction deleted");
+    },
+    onError: () => {
+      toast.error("Failed to delete transaction");
     },
   });
 
@@ -38,6 +43,10 @@ export const ActionCell = ({
     onSuccess: () => {
       utils.transaction.getAll.invalidate();
       meta.cancelEdit();
+      toast.success("Transaction updated");
+    },
+    onError: () => {
+      toast.error("Failed to update transaction");
     },
   });
 
