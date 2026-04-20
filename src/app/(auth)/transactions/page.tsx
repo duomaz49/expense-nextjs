@@ -1,7 +1,7 @@
 "use client";
 
 import { trpc } from "@/lib/trpc/client";
-import { columns, DataTable } from "./_table";
+import { columns, DataTable } from "./_components/_table";
 import ConfirmationModal from "@/components/shared/confirmation-modal";
 import NewTransactionModal from "./_components/new-transaction-modal";
 import ImportPreviewModal from "./_components/import-preview-modal";
