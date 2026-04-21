@@ -20,7 +20,7 @@ export const categoryRouter = router({
         name: category.name,
         budget: budget.amount,
         spent: sql<string>`COALESCE((
-          SELECT SUM(${transaction.amount}) FROM ${transaction}
+          SELECT -SUM(${transaction.amount}) FROM ${transaction}
           WHERE ${transaction.categoryId} = ${category.id}
             AND ${transaction.date} >= ${monthStart}
             AND ${transaction.date} < ${nextMonth}
