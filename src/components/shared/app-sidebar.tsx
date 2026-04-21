@@ -1,8 +1,9 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Wallet, Tags, ArrowLeftRight, DollarSign, Settings } from "lucide-react"
+import { LayoutDashboard, Wallet, Tags, ArrowLeftRight, Settings } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -29,7 +30,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2">
-          <DollarSign className="size-5 shrink-0" />
+          <Image src="/icon.svg" alt="OpenFinance" width={20} height={20} className="shrink-0" />
           <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">OpenFinance</span>
         </div>
       </SidebarHeader>
