@@ -1,12 +1,47 @@
 import { router, protectedProcedure } from "../trpc";
 import { db } from "@/db";
-import { category } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { budget, category, transaction } from "@/db/schema";
+import { eq, and, gte, lt, sql } from "drizzle-orm";
 import { z } from "zod";
 
 export const categoryRouter = router({
   getAll: protectedProcedure.query(async ({ ctx }) => {
     return db.select().from(category).where(eq(category.userId, ctx.user.id));
+  }),
+
+  getOverview: protectedProcedure.query(async ({ ctx }) => {
+    const now = new Date();
+    const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
+    const nextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)).toISOString();
+
+    return db
+      .select({
+        id: category.id,
+        name: category.name,
+        budget: budget.amount,
+        spent: sql<string>`COALESCE((
+          SELECT SUM(${transaction.amount}) FROM ${transaction}
+          WHERE ${transaction.categoryId} = ${category.id}
+            AND ${transaction.date} >= ${monthStart}
+            AND ${transaction.date} < ${nextMonth}
+        ), 0)`.as("spent"),
+        txnCount: sql<number>`(
+          SELECT COUNT(*)::int FROM ${transaction}
+          WHERE ${transaction.categoryId} = ${category.id}
+            AND ${transaction.date} >= ${monthStart}
+            AND ${transaction.date} < ${nextMonth}
+        )`.as("txn_count"),
+      })
+      .from(category)
+      .leftJoin(
+        budget,
+        and(
+          eq(budget.categoryId, category.id),
+          gte(budget.month, monthStart),
+          lt(budget.month, nextMonth),
+        ),
+      )
+      .where(eq(category.userId, ctx.user.id));
   }),
 
   add: protectedProcedure

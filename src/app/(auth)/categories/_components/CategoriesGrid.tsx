@@ -1,19 +1,31 @@
 "use client";
 
-import { Category } from "@/lib/types/types";
-import CategoryCard from "./CategoryCard";
+import CategoryCard, { CategoryOverview } from "./CategoryCard";
 
 interface CategoryGridProps {
-    categories: Category[];
+    categories: CategoryOverview[];
+    onEdit?: (id: string) => void;
+    onDelete?: (id: string) => void;
 }
 
-export default function CategoriesGrid({ categories }: CategoryGridProps) {
+export default function CategoriesGrid({ categories, onEdit, onDelete }: CategoryGridProps) {
+    if (categories.length === 0) {
+        return (
+            <div className="rounded-lg border border-dashed p-10 text-center text-muted-foreground">
+                No categories yet. Create one to start tracking.
+            </div>
+        );
+    }
+
     return (
-        <div className="grid max-wsm grid-cols-4">
-            {categories.map(c => (
-                <div key={c.id} className="mb-2 mx-2">
-                    <CategoryCard category={c} />
-                </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {categories.map((c) => (
+                <CategoryCard
+                    key={c.id}
+                    category={c}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                />
             ))}
         </div>
     );

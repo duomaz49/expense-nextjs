@@ -40,7 +40,8 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Filter, Plus, X } from "lucide-react";
 import { useState } from "react";
 import type { Transaction } from "@/lib/types/types";
 import { useNewTransactionModalStore } from "@/store/new-transaction-modal-store";
@@ -78,7 +79,9 @@ export function DataTable<TData, TValue>({
     setColumnFilters([]);
   };
 
-  const hasActiveFilters = dateFrom || dateTo || categoryFilter !== "all";
+  const activeFilterCount =
+    (dateFrom ? 1 : 0) + (dateTo ? 1 : 0) + (categoryFilter !== "all" ? 1 : 0);
+  const hasActiveFilters = activeFilterCount > 0;
 
   const categories = [
     ...new Set(
@@ -144,67 +147,90 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center gap-2 py-4">
-        <div className="flex items-center gap-2">
-          <span className="text-sm">Table filters:</span>
-          <div>
-            <span className="text-xs text-muted-foreground me-1">From</span>
-            <Input
-              type="date"
-              value={dateFrom}
-              onChange={(e) => {
-                setDateFrom(e.target.value);
-                handleDateFilter(e.target.value, dateTo);
-              }}
-              className="w-36"
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">To</span>
-            <Input
-              type="date"
-              value={dateTo}
-              onChange={(e) => {
-                setDateTo(e.target.value);
-                handleDateFilter(dateFrom, e.target.value);
-              }}
-              className="w-36"
-            />
-          </div>
-        </div>
-        <Select
-          value={categoryFilter}
-          onValueChange={(value) => {
-            setCategoryFilter(value);
-            table
-              .getColumn("categoryName")
-              ?.setFilterValue(value === "all" ? undefined : value);
-          }}
-        >
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="All categories" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All categories</SelectItem>
-            {categories.map((cat) => (
-              <SelectItem key={cat} value={cat}>
-                {cat}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {hasActiveFilters && (
-          <Button
-            variant="ghost"
-            onClick={resetFilters}
-            className="text-muted-foreground"
-          >
-            Reset filters
-          </Button>
-        )}
+      <div className="flex items-center justify-between gap-2 py-2 text-xs">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 cursor-pointer"
+            >
+              <Filter />
+              Filters
+              {hasActiveFilters && (
+                <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-primary px-1 text-[10px] text-primary-foreground">
+                  {activeFilterCount}
+                </span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent align="start" className="w-80 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="font-medium">Filters</span>
+              {hasActiveFilters && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={resetFilters}
+                  className="h-6 px-2 text-muted-foreground"
+                >
+                  <X /> Reset
+                </Button>
+              )}
+            </div>
+            <div className="space-y-1.5">
+              <span className="text-muted-foreground">Date from</span>
+              <Input
+                type="date"
+                value={dateFrom}
+                onChange={(e) => {
+                  setDateFrom(e.target.value);
+                  handleDateFilter(e.target.value, dateTo);
+                }}
+                className="h-8"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <span className="text-muted-foreground">Date to</span>
+              <Input
+                type="date"
+                value={dateTo}
+                onChange={(e) => {
+                  setDateTo(e.target.value);
+                  handleDateFilter(dateFrom, e.target.value);
+                }}
+                className="h-8"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <span className="text-muted-foreground">Category</span>
+              <Select
+                value={categoryFilter}
+                onValueChange={(value) => {
+                  setCategoryFilter(value);
+                  table
+                    .getColumn("categoryName")
+                    ?.setFilterValue(value === "all" ? undefined : value);
+                }}
+              >
+                <SelectTrigger className="h-8 w-full">
+                  <SelectValue placeholder="All categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All categories</SelectItem>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </PopoverContent>
+        </Popover>
         <Button
-          className="cursor-pointer ml-auto"
-          size="lg"
+          className="h-8 cursor-pointer"
+          size="sm"
           onClick={() => openNewTransactionModal()}
         >
           <Plus /> New Transaction

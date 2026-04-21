@@ -10,7 +10,8 @@ export default function TransactionPage() {
   const [transactions] = trpc.transaction.getAll.useSuspenseQuery();
 
   return (
-    <div className="md:container md:mx-auto mt-5">
+    <div className="md:container md:mx-auto mt-5 space-y-4">
+      <h1 className="text-lg font-semibold">Transactions</h1>
       <DataTable columns={columns} data={transactions} />
       <ConfirmationModal />
       <NewTransactionModal />
