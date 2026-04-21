@@ -31,7 +31,7 @@ export default function BudgetPage() {
     const [monthDate, setMonthDate] = useState<Date>(firstOfCurrentMonth);
     const monthIso = useMemo(() => monthDate.toISOString(), [monthDate]);
 
-    const { data: rows = [] } = trpc.budget.getOverview.useQuery({ month: monthIso });
+    const { data: rows = [], isPending } = trpc.budget.getOverview.useQuery({ month: monthIso });
     const { open } = useBudgetFormModalStore();
     const { openConfirmModal, closeModal: closeConfirm } = useConfirmationModalStore();
     const utils = trpc.useUtils();
@@ -101,6 +101,7 @@ export default function BudgetPage() {
             <BudgetsList
                 rows={rows}
                 month={monthIso}
+                isLoading={isPending}
                 onSet={handleSet}
                 onDelete={handleDelete}
             />

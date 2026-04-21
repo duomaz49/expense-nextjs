@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export interface BudgetOverviewRow {
     categoryId: string;
@@ -14,13 +15,45 @@ export interface BudgetOverviewRow {
 interface Props {
     rows: BudgetOverviewRow[];
     month: string;
+    isLoading?: boolean;
     onSet: (row: BudgetOverviewRow) => void;
     onDelete: (row: BudgetOverviewRow) => void;
 }
 
 const fmt = new Intl.NumberFormat(undefined, { style: "currency", currency: "EUR" });
 
-export default function BudgetsList({ rows, onSet, onDelete }: Props) {
+export default function BudgetsList({ rows, isLoading, onSet, onDelete }: Props) {
+    if (isLoading) {
+        return (
+            <div className="overflow-hidden rounded-md border text-xs">
+                <div className="flex items-center justify-between border-b px-3 py-2">
+                    <Skeleton className="h-3 w-24" />
+                    <Skeleton className="h-3 w-32" />
+                </div>
+                <ul>
+                    {[...Array(6).keys()].map((i) => (
+                        <li
+                            key={i}
+                            className="grid grid-cols-[1fr_auto] items-center gap-3 border-b px-3 py-2 last:border-b-0"
+                        >
+                            <div className="min-w-0 space-y-2">
+                                <div className="flex items-baseline justify-between gap-2">
+                                    <Skeleton className="h-3 w-28" />
+                                    <Skeleton className="h-3 w-20" />
+                                </div>
+                                <Skeleton className="h-1 w-full" />
+                            </div>
+                            <div className="flex gap-0.5">
+                                <Skeleton className="h-7 w-7" />
+                                <Skeleton className="h-7 w-7" />
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+
     if (rows.length === 0) {
         return (
             <div className="border border-dashed p-10 text-center text-xs text-muted-foreground">
