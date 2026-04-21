@@ -147,7 +147,7 @@ export default function NewTransactionForm() {
                 <CategorySelect
                   value={field.value ?? ""}
                   onChange={field.onChange}
-                  className="w-100"
+                  className="w-full"
                 />
               </FormControl>
               <FormMessage />
