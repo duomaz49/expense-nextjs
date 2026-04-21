@@ -12,7 +12,7 @@ export interface BudgetOverviewRow {
     spent: string;
 }
 
-interface Props {
+interface BudgetsListProps {
     rows: BudgetOverviewRow[];
     month: string;
     isLoading?: boolean;
@@ -22,7 +22,7 @@ interface Props {
 
 const fmt = new Intl.NumberFormat(undefined, { style: "currency", currency: "EUR" });
 
-export default function BudgetsList({ rows, isLoading, onSet, onDelete }: Props) {
+export default function BudgetsList({ rows, isLoading, onSet, onDelete }: BudgetsListProps) {
     if (isLoading) {
         return (
             <div className="overflow-hidden rounded-md border text-xs">
