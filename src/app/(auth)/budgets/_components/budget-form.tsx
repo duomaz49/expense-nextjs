@@ -61,14 +61,12 @@ export default function BudgetForm() {
         if (isEdit && editing.id) {
             editBudget.mutate({
                 id: editing.id,
-                name: editing.categoryName,
                 amount: values.amount,
                 month: editing.month,
                 categoryId: editing.categoryId,
             });
         } else {
             addBudget.mutate({
-                name: editing.categoryName,
                 amount: values.amount,
                 month: editing.month,
                 categoryId: editing.categoryId,

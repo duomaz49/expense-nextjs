@@ -178,11 +178,12 @@ export const category = pgTable("category", {
 
 export const budget = pgTable("budget", {
   id: uuid().defaultRandom().primaryKey().notNull(),
-  name: text().notNull(),
   amount: numeric().notNull(),
   month: timestamp({ withTimezone: true, mode: 'string' }).notNull(),
   categoryId: uuid("category_id").notNull().references(() => category.id, { onDelete: "cascade" }),
   userId: uuid("user_id").notNull().references(() => userInNeonAuth.id, { onDelete: "cascade" }),
   createdAt: timestamp({ withTimezone: true, mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp({ withTimezone: true, mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
-})
+}, (table) => [
+  unique("budget_user_category_month_uidx").on(table.userId, table.categoryId, table.month),
+])

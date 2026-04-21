@@ -15,6 +15,13 @@
       "when": 1773145524581,
       "tag": "0001_aspiring_viper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776760261120,
+      "tag": "0002_grey_mentallo",
+      "breakpoints": true
     }
   ]
 }

@@ -44,7 +44,6 @@ export const budgetRouter = router({
 
     add: protectedProcedure
         .input(z.object({
-            name: z.string(),
             amount: z.string(),
             month: z.string().check(z.iso.datetime()),
             categoryId: z.string().check(z.uuid())
@@ -56,7 +55,6 @@ export const budgetRouter = router({
     edit: protectedProcedure
         .input(z.object({
             id: z.string().check(z.uuid()),
-            name: z.string(),
             amount: z.string(),
             month: z.string().check(z.iso.datetime()),
             categoryId: z.string().check(z.uuid())
