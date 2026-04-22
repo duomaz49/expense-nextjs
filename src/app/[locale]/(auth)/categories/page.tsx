@@ -13,7 +13,7 @@ import ConfirmationModal from "@/components/shared/confirmation-modal";
 import { useCategoryFormModalStore } from "@/store/category-form-modal-store";
 import { useConfirmationModalStore } from "@/store/confirmation-modal-store";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 16;
 
 export default function CategoriesPage() {
     const t = useTranslations("categories");
