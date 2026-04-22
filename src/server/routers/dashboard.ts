@@ -14,6 +14,9 @@ export const dashboardRouter = router({
         const nextMonth = monthBoundary(now.getUTCFullYear(), now.getUTCMonth() + 1);
         const prevMonth = monthBoundary(now.getUTCFullYear(), now.getUTCMonth() - 1);
         const sixMonthsBack = monthBoundary(now.getUTCFullYear(), now.getUTCMonth() - 5);
+        const yearStart = monthBoundary(now.getUTCFullYear(), 0);
+        const nextYear = monthBoundary(now.getUTCFullYear() + 1, 0);
+        const prevYearStart = monthBoundary(now.getUTCFullYear() - 1, 0);
 
         const totalsForRange = (startIso: string, endIso: string) =>
             db
@@ -33,6 +36,8 @@ export const dashboardRouter = router({
 
         const [current] = await totalsForRange(monthStart.toISOString(), nextMonth.toISOString());
         const [previous] = await totalsForRange(prevMonth.toISOString(), monthStart.toISOString());
+        const [currentYear] = await totalsForRange(yearStart.toISOString(), nextYear.toISOString());
+        const [previousYear] = await totalsForRange(prevYearStart.toISOString(), yearStart.toISOString());
 
         const monthlyRows = await db
             .select({
@@ -91,6 +96,18 @@ export const dashboardRouter = router({
                 spent: Number(previous.spent),
                 net: Number(previous.income) - Number(previous.spent),
                 count: previous.count,
+            },
+            currentYear: {
+                income: Number(currentYear.income),
+                spent: Number(currentYear.spent),
+                net: Number(currentYear.income) - Number(currentYear.spent),
+                count: currentYear.count,
+            },
+            previousYear: {
+                income: Number(previousYear.income),
+                spent: Number(previousYear.spent),
+                net: Number(previousYear.income) - Number(previousYear.spent),
+                count: previousYear.count,
             },
             monthly: monthlyRows.map((r) => ({
                 month: r.month,

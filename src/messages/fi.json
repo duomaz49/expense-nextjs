@@ -109,7 +109,10 @@
       "spent": "Menot",
       "net": "Netto",
       "transactions": "Tapahtumat",
-      "vsLastMonth": "% vs. viime kuukausi"
+      "vsLastMonth": "% vs. viime kuukausi",
+      "vsLastYear": "% vs. viime vuosi",
+      "thisMonth": "Tässä kuussa",
+      "thisYear": "Tänä vuonna"
     },
     "monthlyChart": {
       "last6Months": "Viimeiset 6 kuukautta",

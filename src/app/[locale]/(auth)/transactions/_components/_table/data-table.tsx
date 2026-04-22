@@ -59,6 +59,7 @@ export function DataTable<TData, TValue>({
   const t = useTranslations("transactions.table");
   const { openNewTransactionModal } = useNewTransactionModalStore();
   const [editingRowId, setEditingRowId] = useState<string | null>(null);
+  const [savingRowId, setSavingRowId] = useState<string | null>(null);
   const [editDraft, setEditDraft] = useState<Partial<Transaction>>({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -109,6 +110,7 @@ export function DataTable<TData, TValue>({
     meta: {
       editingRowId,
       editDraft,
+      savingRowId,
       startEdit: (row: Transaction) => {
         setEditingRowId(row.id);
         setEditDraft(row);
@@ -120,6 +122,7 @@ export function DataTable<TData, TValue>({
       setDraftField: (field: keyof Transaction, value: unknown) => {
         setEditDraft((prev) => ({ ...prev, [field]: value }));
       },
+      setSaving: (id: string | null) => setSavingRowId(id),
     },
   });
 

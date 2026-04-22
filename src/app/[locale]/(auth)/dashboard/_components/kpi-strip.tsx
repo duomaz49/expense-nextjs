@@ -14,6 +14,7 @@ interface Totals {
 interface Props {
     current: Totals;
     previous: Totals;
+    vsLabel: string;
 }
 
 const delta = (current: number, previous: number) => {
@@ -55,10 +56,9 @@ const Card = ({
     );
 };
 
-export default function KpiStrip({ current, previous }: Props) {
+export default function KpiStrip({ current, previous, vsLabel }: Props) {
     const locale = useLocale();
     const t = useTranslations("dashboard.kpi");
-    const vsLabel = t("vsLastMonth");
     return (
         <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
             <Card

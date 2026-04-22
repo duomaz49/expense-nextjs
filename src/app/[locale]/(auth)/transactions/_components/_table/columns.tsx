@@ -12,13 +12,17 @@ import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { formatCurrency, formatDate } from "@/lib/formatters";
+import { Skeleton } from "@/components/ui/skeleton";
+import CategorySelect from "@/components/shared/category-select";
 
 interface EditMeta {
   editingRowId: string | null;
   editDraft: Partial<Transaction>;
+  savingRowId: string | null;
   cancelEdit: () => void;
   setDraftField: (field: keyof Transaction, value: unknown) => void;
   startEdit: (row: Transaction) => void;
+  setSaving: (id: string | null) => void;
 }
 
 const ActionCell = ({
@@ -32,6 +36,7 @@ const ActionCell = ({
 
   const meta = table.options.meta as EditMeta;
   const isEditing = meta?.editingRowId === row.original.id;
+  const isSaving = meta?.savingRowId === row.original.id;
 
   const deleteTransaction = trpc.transaction.delete.useMutation({
     onSuccess: () => {
@@ -44,17 +49,20 @@ const ActionCell = ({
   });
 
   const editTransaction = trpc.transaction.edit.useMutation({
-    onSuccess: () => {
-      utils.transaction.getAll.invalidate();
+    onSuccess: async () => {
       meta.cancelEdit();
+      await utils.transaction.getAll.invalidate();
+      meta.setSaving(null);
       toast.success(t("toasts.updated"));
     },
     onError: () => {
+      meta.setSaving(null);
       toast.error(t("toasts.updateFailed"));
     },
   });
 
   const handleSave = () => {
+    meta.setSaving(transaction.id);
     editTransaction.mutate({
       id: transaction.id,
       date: new Date(meta.editDraft.date ?? transaction.date).toISOString(),
@@ -63,6 +71,15 @@ const ActionCell = ({
       categoryId: meta.editDraft.categoryId ?? transaction.categoryId ?? "",
     });
   };
+
+  if (isSaving) {
+    return (
+      <div className="flex gap-2">
+        <Skeleton className="h-9 w-9" />
+        <Skeleton className="h-9 w-9" />
+      </div>
+    );
+  }
 
   if (isEditing) {
     return (
@@ -126,6 +143,9 @@ export function useColumns(): ColumnDef<Transaction>[] {
         ),
         cell: ({ getValue, row, table }: CellContext<Transaction, unknown>) => {
           const meta = table.options.meta as EditMeta;
+          if (meta?.savingRowId === row.original.id) {
+            return <Skeleton className="h-4 w-32" />;
+          }
           if (meta?.editingRowId === row.original.id) {
             return (
               <Input
@@ -167,6 +187,9 @@ export function useColumns(): ColumnDef<Transaction>[] {
         ),
         cell: ({ getValue, row, table }: CellContext<Transaction, unknown>) => {
           const meta = table.options.meta as EditMeta;
+          if (meta?.savingRowId === row.original.id) {
+            return <Skeleton className="h-4 w-20" />;
+          }
           if (meta?.editingRowId === row.original.id) {
             const isoDate = (meta.editDraft.date ?? getValue()) as string;
             const dateValue = isoDate.substring(0, 10);
@@ -202,6 +225,9 @@ export function useColumns(): ColumnDef<Transaction>[] {
         ),
         cell: ({ getValue, row, table }: CellContext<Transaction, unknown>) => {
           const meta = table.options.meta as EditMeta;
+          if (meta?.savingRowId === row.original.id) {
+            return <Skeleton className="h-4 w-16" />;
+          }
           if (meta?.editingRowId === row.original.id) {
             return (
               <Input
@@ -230,7 +256,21 @@ export function useColumns(): ColumnDef<Transaction>[] {
             </Button>
           </div>
         ),
-        cell: ({ getValue }: CellContext<Transaction, unknown>) => {
+        cell: ({ getValue, row, table }: CellContext<Transaction, unknown>) => {
+          const meta = table.options.meta as EditMeta;
+          if (meta?.savingRowId === row.original.id) {
+            return <Skeleton className="h-4 w-24" />;
+          }
+          if (meta?.editingRowId === row.original.id) {
+            const value = (meta.editDraft.categoryId ?? row.original.categoryId ?? "") as string;
+            return (
+              <CategorySelect
+                value={value}
+                onChange={(id) => meta.setDraftField("categoryId", id)}
+                className="h-8 w-full"
+              />
+            );
+          }
           return <span>{(getValue() as string) ?? t("emptyCategory")}</span>;
         },
       },

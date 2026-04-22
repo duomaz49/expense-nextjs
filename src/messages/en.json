@@ -109,7 +109,10 @@
       "spent": "Spent",
       "net": "Net",
       "transactions": "Transactions",
-      "vsLastMonth": "% vs last month"
+      "vsLastMonth": "% vs last month",
+      "vsLastYear": "% vs last year",
+      "thisMonth": "This month",
+      "thisYear": "This year"
     },
     "monthlyChart": {
       "last6Months": "Last 6 months",
