@@ -2,19 +2,24 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Combobox,
+  ComboboxCollection,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxSeparator,
+} from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { trpc } from "@/lib/trpc/client";
 
-const CREATE_VALUE = "__create__";
+interface Category {
+  id: string;
+  name: string;
+}
 
 interface CategorySelectProps {
   value: string;
@@ -38,13 +43,7 @@ export default function CategorySelect({
   const [creating, setCreating] = useState(false);
   const [name, setName] = useState("");
 
-  const handleSelect = (val: string) => {
-    if (val === CREATE_VALUE) {
-      setCreating(true);
-      return;
-    }
-    onChange(val);
-  };
+  const selected = categories.find((c) => c.id === value) ?? null;
 
   const handleCreate = async () => {
     const trimmed = name.trim();
@@ -92,19 +91,40 @@ export default function CategorySelect({
   }
 
   return (
-    <Select value={value} onValueChange={handleSelect}>
-      <SelectTrigger className={className ?? "w-full"}>
-        <SelectValue placeholder={placeholder ?? t("placeholder")} />
-      </SelectTrigger>
-      <SelectContent>
-        {categories.map((c) => (
-          <SelectItem key={c.id} value={c.id}>
-            {c.name}
-          </SelectItem>
-        ))}
-        {categories.length > 0 && <SelectSeparator />}
-        <SelectItem value={CREATE_VALUE}>{t("createNew")}</SelectItem>
-      </SelectContent>
-    </Select>
+    <Combobox<Category>
+      items={categories}
+      value={selected}
+      onValueChange={(item) => onChange(item?.id ?? "")}
+      itemToStringLabel={(c) => c.name}
+      isItemEqualToValue={(a, b) => a.id === b.id}
+    >
+      <ComboboxInput
+        placeholder={placeholder ?? t("placeholder")}
+        className={className ?? "w-full"}
+      />
+      <ComboboxContent>
+        <ComboboxList>
+          <ComboboxEmpty>{t("noMatches")}</ComboboxEmpty>
+          <ComboboxCollection>
+            {(c: Category) => (
+              <ComboboxItem key={c.id} value={c}>
+                {c.name}
+              </ComboboxItem>
+            )}
+          </ComboboxCollection>
+        </ComboboxList>
+        {categories.length > 0 && <ComboboxSeparator />}
+        <button
+          type="button"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            setCreating(true);
+          }}
+          className="relative flex w-full cursor-pointer items-center gap-2 py-2 pr-8 pl-2 text-xs text-primary outline-hidden hover:bg-accent"
+        >
+          {t("createNew")}
+        </button>
+      </ComboboxContent>
+    </Combobox>
   );
 }

@@ -255,7 +255,8 @@
     "select": {
       "placeholder": "Select category",
       "newName": "New category name",
-      "createNew": "+ Create new category"
+      "createNew": "+ Create new category",
+      "noMatches": "No categories match"
     }
   },
   "validation": {

@@ -255,7 +255,8 @@
     "select": {
       "placeholder": "Valitse kategoria",
       "newName": "Uuden kategorian nimi",
-      "createNew": "+ Luo uusi kategoria"
+      "createNew": "+ Luo uusi kategoria",
+      "noMatches": "Ei osumia"
     }
   },
   "validation": {
