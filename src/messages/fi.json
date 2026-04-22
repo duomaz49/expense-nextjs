@@ -1,0 +1,269 @@
+{
+  "metadata": {
+    "title": "Menoseuranta",
+    "description": "Seuraa menojasi helposti intuitiivisella menoseurantasovelluksellamme, joka on rakennettu Next.js:llä ja NeonDB:llä."
+  },
+  "common": {
+    "save": "Tallenna",
+    "create": "Luo",
+    "cancel": "Peruuta",
+    "continue": "Jatka",
+    "add": "Lisää",
+    "edit": "Muokkaa",
+    "delete": "Poista",
+    "import": "Tuo",
+    "preview": "Esikatsele",
+    "reset": "Tyhjennä",
+    "areYouSure": "Oletko varma?",
+    "defaultConfirmDescription": "Tätä toimintoa ei voi peruuttaa."
+  },
+  "nav": {
+    "brand": "OpenFinance",
+    "dashboard": "Kojelauta",
+    "transactions": "Tapahtumat",
+    "budgets": "Budjetit",
+    "categories": "Kategoriat",
+    "settings": "Asetukset"
+  },
+  "landing": {
+    "header": {
+      "signIn": "Kirjaudu sisään",
+      "getStarted": "Aloita"
+    },
+    "hero": {
+      "titleLine1": "Ota haltuun",
+      "titleLine2": "taloudellinen tulevaisuutesi",
+      "subtitle": "Seuraa menoja, aseta budjetteja ja saa näkemyksiä kulutustottumuksistasi intuitiivisella seuranta-alustallamme.",
+      "feature1Title": "Helppo seuranta",
+      "feature1Desc": "Lisää ja kategorisoi menosi nopeasti yksinkertaisella käyttöliittymällämme",
+      "feature2Title": "Älykkäät näkemykset",
+      "feature2Desc": "Saat yksityiskohtaisia raportteja ja näkemyksiä kulutuskäyttäytymisestäsi",
+      "feature3Title": "Budjettitavoitteet",
+      "feature3Desc": "Aseta budjetteja ja seuraa edistymistäsi taloudellisia tavoitteita kohti"
+    },
+    "foreverFree": {
+      "badge": "100 % ilmainen",
+      "heading": "Täysin ilmainen, aina",
+      "subtitle": "Ei kompastuskiviä, ei kokeilujaksoja, ei premium-lisäpalveluita. Täysi menoseuranta kaikille.",
+      "item1Title": "Ei piilokuluja",
+      "item1Desc": "Ei premium-paketteja, ei yllätysmaksuja, ei luottokorttia vaadita",
+      "item2Title": "Kaikki ominaisuudet mukana",
+      "item2Desc": "Saat täyden menoseurantakokemuksen ilman kuluja",
+      "item3Title": "Ei mainoksia",
+      "item3Desc": "Selkeä, häiriötön käyttöliittymä, joka keskittyy talouteesi"
+    },
+    "quickStart": {
+      "heading": "Aloita 30 sekunnissa",
+      "subtitle": "Kolme yksinkertaista askelta parempaan talouden seurantaan",
+      "step1Title": "Rekisteröidy ilmaiseksi",
+      "step1Desc": "Vain sähköpostiosoite, ei maksutietoja",
+      "step2Title": "Lisää ensimmäinen meno",
+      "step2Desc": "Kahvi, lounas, bensa – seuraa kaikkea",
+      "step3Title": "Näe kulutusmalleistasi",
+      "step3Desc": "Huomaa kulutustottumuksesi avautuvan"
+    },
+    "features": {
+      "heading": "Kaikki mitä tarvitset",
+      "subtitle": "Tehokkaita ominaisuuksia, jotka eivät maksa penniäkään",
+      "visualReportsTitle": "Visuaaliset raportit",
+      "visualReportsDesc": "Kaaviot ja graafit havainnollistavat kulutuskäyttäytymisesi selkeästi",
+      "smartCategoriesTitle": "Älykkäät kategoriat",
+      "smartCategoriesDesc": "Kategorisoi menosi automaattisesti älykkäillä ehdotuksilla",
+      "multipleAccountsTitle": "Useita tilejä",
+      "multipleAccountsDesc": "Seuraa menoja käteisen, luottokorttien ja pankkitilien välillä",
+      "monthlyBudgetsTitle": "Kuukausibudjetit",
+      "monthlyBudgetsDesc": "Aseta kulutusrajat ja seuraa edistymistäsi tavoitteita kohti",
+      "searchFilterTitle": "Haku ja suodatus",
+      "searchFilterDesc": "Löydä mikä tahansa meno nopeasti tehokkailla hakutoiminnoilla",
+      "mobileFriendlyTitle": "Mobiiliystävällinen",
+      "mobileFriendlyDesc": "Täydellinen responsiivinen design, joka toimii saumattomasti kaikilla laitteilla"
+    },
+    "trust": {
+      "heading": "Tietosi ovat suojassa",
+      "secureTitle": "🔒 Turvallinen oletuksena",
+      "secureDesc": "HTTPS-salaus ja turvallinen tietokantatallennus suojaavat tietojasi",
+      "privacyTitle": "🏠 Yksityisyys etusijalla",
+      "privacyDesc": "Menotietosi ovat sinun – emme jaa tai myy tietojasi"
+    },
+    "cta": {
+      "heading": "Valmis ottamaan ohjat?",
+      "subtitle": "Liity tuhansiin, jotka ovat mullistaneet taloutensa ilmaisella menoseurantasovelluksellamme",
+      "button": "Aloita seuranta ilmaiseksi →"
+    },
+    "faq": {
+      "heading": "Usein kysytyt kysymykset",
+      "q1": "Onko tämä todella ilmainen ikuisesti?",
+      "a1": "Kyllä! Ei kokeiluja, ei premium-paketteja, ei piilomaksuja. Uskomme, että jokainen ansaitsee pääsyn hyviin talouden työkaluihin.",
+      "q2": "Tekeekö tämä sovellus mitään voittoa?",
+      "a2": "Emme tee! Tämä on intohimoprojekti, joka yhdistää rakkautemme talouden voimaannuttamiseen ja ohjelmistokehitykseen. Uskomme, että jokainen ansaitsee pääsyn laadukkaisiin talouden työkaluihin.",
+      "q3": "Onko taloudelliset tietoni turvassa?",
+      "a3": "Kyllä! Käytämme HTTPS-salausta tiedonsiirrossa ja turvallista tietokantatallennusta. Henkilökohtaisia taloudellisia tietojasi ei koskaan jaeta kolmansille osapuolille.",
+      "q4": "Voinko käyttää sovellusta puhelimella?",
+      "a4": "Kyllä! Verkkosovelluksemme toimii täydellisesti mobiililaitteilla."
+    }
+  },
+  "dashboard": {
+    "title": "Kojelauta",
+    "kpi": {
+      "income": "Tulot",
+      "spent": "Menot",
+      "net": "Netto",
+      "transactions": "Tapahtumat",
+      "vsLastMonth": "% vs. viime kuukausi"
+    },
+    "monthlyChart": {
+      "last6Months": "Viimeiset 6 kuukautta",
+      "spent": "Menot",
+      "income": "Tulot"
+    },
+    "categoryDonut": {
+      "byCategory": "Kategorioittain",
+      "noSpending": "Ei menoja tässä kuussa"
+    },
+    "budgetVsActual": {
+      "heading": "Budjetti vs. toteuma",
+      "empty": "Budjetteja ei ole asetettu tälle kuulle. Lisää Budjetit-sivulta."
+    }
+  },
+  "transactions": {
+    "title": "Tapahtumat",
+    "table": {
+      "description": "Kuvaus",
+      "date": "Päivämäärä",
+      "amount": "Summa",
+      "category": "Kategoria",
+      "actions": "Toiminnot",
+      "empty": "Tapahtumia ei löytynyt.",
+      "emptyCategory": "—",
+      "filters": "Suodattimet",
+      "reset": "Tyhjennä",
+      "dateFrom": "Alkaen",
+      "dateTo": "Päättyen",
+      "categoryLabel": "Kategoria",
+      "allCategories": "Kaikki kategoriat",
+      "newTransaction": "Uusi tapahtuma",
+      "deleteConfirmTitle": "Poistetaanko tapahtuma?"
+    },
+    "form": {
+      "date": "Päivämäärä",
+      "type": "Tyyppi",
+      "expense": "Meno",
+      "income": "Tulo",
+      "amount": "Summa",
+      "description": "Kuvaus",
+      "category": "Kategoria",
+      "save": "Tallenna"
+    },
+    "modal": {
+      "createTab": "Luo tapahtuma",
+      "importTab": "Tuo tapahtumat",
+      "newTitle": "Uusi tapahtuma",
+      "newDescription": "Lisää uusi tapahtuma tietoihisi.",
+      "importTitle": "Tuo tapahtumia",
+      "importDescription": "Tuo tapahtumia massana CSV-tiedostona. Tuetaan tällä hetkellä Nordean CSV-muotoa."
+    },
+    "import": {
+      "previewTitle": "Esikatsele tuonti",
+      "previewRows": "{count} riviä valmiina tuontia varten.",
+      "categoryAppliedToAll": "Kategoria (koskee kaikkia)",
+      "date": "Päivämäärä",
+      "amount": "Summa",
+      "description": "Kuvaus",
+      "csvFile": "CSV-tiedosto",
+      "preview": "Esikatsele",
+      "fileTooLarge": "Tiedoston enimmäiskoko on 1 Mt."
+    },
+    "toasts": {
+      "added": "Tapahtuma lisätty",
+      "addFailed": "Tapahtuman lisääminen epäonnistui",
+      "updated": "Tapahtuma päivitetty",
+      "updateFailed": "Tapahtuman päivittäminen epäonnistui",
+      "deleted": "Tapahtuma poistettu",
+      "deleteFailed": "Tapahtuman poistaminen epäonnistui",
+      "imported": "Tuotu {count} tapahtumaa",
+      "importFailed": "Tuonti epäonnistui"
+    }
+  },
+  "budgets": {
+    "title": "Budjetti",
+    "form": {
+      "editTitle": "Muokkaa budjettia",
+      "setTitle": "Aseta budjetti",
+      "amount": "Summa",
+      "save": "Tallenna",
+      "create": "Luo"
+    },
+    "list": {
+      "totalBudgeted": "Budjetoitu yhteensä",
+      "of": "/",
+      "noBudgetSet": "Ei budjettia",
+      "empty": "Ei vielä kategorioita. Luo ensin kategoria, jotta voit budjetoida sille.",
+      "editAria": "Muokkaa budjettia",
+      "removeAria": "Poista budjetti",
+      "setBudget": "Aseta budjetti"
+    },
+    "deleteConfirm": {
+      "title": "Poistetaanko budjetti kategorialle \"{category}\"?",
+      "description": "Tämä poistaa vain tämän kuukauden budjetin. Tapahtumat säilyvät koskemattomina."
+    },
+    "toasts": {
+      "added": "Budjetti lisätty",
+      "addFailed": "Budjetin lisääminen epäonnistui",
+      "updated": "Budjetti päivitetty",
+      "updateFailed": "Budjetin päivittäminen epäonnistui",
+      "removed": "Budjetti poistettu",
+      "removeFailed": "Budjetin poistaminen epäonnistui"
+    }
+  },
+  "categories": {
+    "title": "Kategoriat",
+    "newCategory": "Uusi kategoria",
+    "form": {
+      "editTitle": "Muokkaa kategoriaa",
+      "newTitle": "Uusi kategoria",
+      "editDescription": "Nimeä olemassa oleva kategoria uudelleen.",
+      "newDescription": "Luo uusi kategoria kulutuksen seurantaa varten.",
+      "name": "Nimi",
+      "save": "Tallenna",
+      "create": "Luo"
+    },
+    "card": {
+      "of": "/ {amount}",
+      "noBudget": "ei budjettia",
+      "editAria": "Muokkaa kategoriaa",
+      "deleteAria": "Poista kategoria",
+      "transactionCount": "{count, plural, one {# tapahtuma} other {# tapahtumaa}} tässä kuussa"
+    },
+    "grid": {
+      "empty": "Ei vielä kategorioita. Luo yksi aloittaaksesi seurannan."
+    },
+    "deleteConfirm": {
+      "title": "Poistetaanko \"{name}\"?",
+      "description": "Tämän kategorian tapahtumat säilyttävät tietonsa, mutta menettävät kategorialinkin."
+    },
+    "toasts": {
+      "added": "Kategoria lisätty",
+      "addFailed": "Kategorian lisääminen epäonnistui",
+      "updated": "Kategoria päivitetty",
+      "updateFailed": "Kategorian päivittäminen epäonnistui",
+      "deleted": "Kategoria poistettu",
+      "deleteFailed": "Kategorian poistaminen epäonnistui"
+    },
+    "select": {
+      "placeholder": "Valitse kategoria",
+      "newName": "Uuden kategorian nimi",
+      "createNew": "+ Luo uusi kategoria"
+    }
+  },
+  "validation": {
+    "nameRequired": "Nimi on pakollinen",
+    "dateRequired": "Päivämäärä on pakollinen",
+    "amountRequired": "Summa on pakollinen",
+    "descriptionRequired": "Kuvaus on pakollinen"
+  },
+  "language": {
+    "switcher": "Kieli",
+    "en": "Englanti",
+    "fi": "Suomi"
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "metadata": {
+    "title": "Expense Tracker",
+    "description": "Track your expenses with ease using our intuitive expense tracker app built with Next.js and NeonDB."
+  },
+  "common": {
+    "save": "Save",
+    "create": "Create",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "import": "Import",
+    "preview": "Preview",
+    "reset": "Reset",
+    "areYouSure": "Are you sure?",
+    "defaultConfirmDescription": "This action cannot be undone."
+  },
+  "nav": {
+    "brand": "OpenFinance",
+    "dashboard": "Dashboard",
+    "transactions": "Transactions",
+    "budgets": "Budgets",
+    "categories": "Categories",
+    "settings": "Settings"
+  },
+  "landing": {
+    "header": {
+      "signIn": "Sign In",
+      "getStarted": "Get Started"
+    },
+    "hero": {
+      "titleLine1": "Take Control of Your",
+      "titleLine2": "Financial Future",
+      "subtitle": "Track expenses, set budgets, and gain insights into your spending habits with our intuitive expense tracking platform.",
+      "feature1Title": "Easy Tracking",
+      "feature1Desc": "Quickly add and categorize your expenses with our simple interface",
+      "feature2Title": "Smart Insights",
+      "feature2Desc": "Get detailed reports and insights about your spending patterns",
+      "feature3Title": "Budget Goals",
+      "feature3Desc": "Set budgets and track your progress towards financial goals"
+    },
+    "foreverFree": {
+      "badge": "100% Free",
+      "heading": "Completely Free, Forever",
+      "subtitle": "No catches, no trials, no premium upsells. Full expense tracking for everyone.",
+      "item1Title": "No Hidden Costs",
+      "item1Desc": "No premium plans, no surprise charges, no credit card required",
+      "item2Title": "All Features Included",
+      "item2Desc": "Get the complete expense tracking experience at zero cost",
+      "item3Title": "No Ads",
+      "item3Desc": "Clean, distraction-free interface focused on your finances"
+    },
+    "quickStart": {
+      "heading": "Get Started in 30 Seconds",
+      "subtitle": "Three simple steps to better financial tracking",
+      "step1Title": "Sign Up Free",
+      "step1Desc": "Just your email, no payment info needed",
+      "step2Title": "Add Your First Expense",
+      "step2Desc": "Coffee, lunch, gas - track it all",
+      "step3Title": "See Your Patterns",
+      "step3Desc": "Watch your spending habits unfold"
+    },
+    "features": {
+      "heading": "Everything You Need",
+      "subtitle": "Powerful features that don't cost a penny",
+      "visualReportsTitle": "Visual Reports",
+      "visualReportsDesc": "Charts and graphs to visualize your spending patterns clearly",
+      "smartCategoriesTitle": "Smart Categories",
+      "smartCategoriesDesc": "Automatically categorize your expenses with intelligent suggestions",
+      "multipleAccountsTitle": "Multiple Accounts",
+      "multipleAccountsDesc": "Track expenses across cash, credit cards, and bank accounts",
+      "monthlyBudgetsTitle": "Monthly Budgets",
+      "monthlyBudgetsDesc": "Set spending limits and monitor your progress towards goals",
+      "searchFilterTitle": "Search & Filter",
+      "searchFilterDesc": "Find any expense quickly with powerful search and filters",
+      "mobileFriendlyTitle": "Mobile Friendly",
+      "mobileFriendlyDesc": "Perfect responsive design that works seamlessly on any device"
+    },
+    "trust": {
+      "heading": "Your Data is Protected",
+      "secureTitle": "🔒 Secure by Default",
+      "secureDesc": "HTTPS encryption and secure database storage protect your information",
+      "privacyTitle": "🏠 Privacy Focused",
+      "privacyDesc": "Your expense data is yours - we don't share or sell your information"
+    },
+    "cta": {
+      "heading": "Ready to Take Control?",
+      "subtitle": "Join thousands who've transformed their finances with our free expense tracker",
+      "button": "Start Tracking Free →"
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions",
+      "q1": "Is it really free forever?",
+      "a1": "Yes! No trials, no premium plans, no hidden fees. We believe everyone deserves access to good financial tools.",
+      "q2": "Does this app make any profit?",
+      "a2": "We don't! This is a passion project combining our love for financial empowerment and software development. We believe everyone deserves access to quality financial tools.",
+      "q3": "Is my financial data secure?",
+      "a3": "Yes! We use HTTPS encryption for data in transit and secure database storage. Your personal financial information is never shared with third parties.",
+      "q4": "Can I use it on my phone?",
+      "a4": "Yes! Our web app works perfectly on mobile."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "kpi": {
+      "income": "Income",
+      "spent": "Spent",
+      "net": "Net",
+      "transactions": "Transactions",
+      "vsLastMonth": "% vs last month"
+    },
+    "monthlyChart": {
+      "last6Months": "Last 6 months",
+      "spent": "Spent",
+      "income": "Income"
+    },
+    "categoryDonut": {
+      "byCategory": "By category",
+      "noSpending": "No spending this month"
+    },
+    "budgetVsActual": {
+      "heading": "Budget vs actual",
+      "empty": "No budgets set this month. Head to Budgets to add one."
+    }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "table": {
+      "description": "Description",
+      "date": "Date",
+      "amount": "Amount",
+      "category": "Category",
+      "actions": "Actions",
+      "empty": "No transactions found.",
+      "emptyCategory": "—",
+      "filters": "Filters",
+      "reset": "Reset",
+      "dateFrom": "Date from",
+      "dateTo": "Date to",
+      "categoryLabel": "Category",
+      "allCategories": "All categories",
+      "newTransaction": "New Transaction",
+      "deleteConfirmTitle": "Delete transaction?"
+    },
+    "form": {
+      "date": "Date",
+      "type": "Type",
+      "expense": "Expense",
+      "income": "Income",
+      "amount": "Amount",
+      "description": "Description",
+      "category": "Category",
+      "save": "Save"
+    },
+    "modal": {
+      "createTab": "Create Transaction",
+      "importTab": "Import Transactions",
+      "newTitle": "New transaction",
+      "newDescription": "Add a new transaction to your records.",
+      "importTitle": "Import transactions",
+      "importDescription": "Bulk import transactions in csv file, currently support csv format from Nordea"
+    },
+    "import": {
+      "previewTitle": "Preview import",
+      "previewRows": "{count} rows ready to import.",
+      "categoryAppliedToAll": "Category (applied to all)",
+      "date": "Date",
+      "amount": "Amount",
+      "description": "Description",
+      "csvFile": "CSV File",
+      "preview": "Preview",
+      "fileTooLarge": "Maximum file size is 1mb."
+    },
+    "toasts": {
+      "added": "Transaction added",
+      "addFailed": "Failed to add transaction",
+      "updated": "Transaction updated",
+      "updateFailed": "Failed to update transaction",
+      "deleted": "Transaction deleted",
+      "deleteFailed": "Failed to delete transaction",
+      "imported": "Imported {count} transactions",
+      "importFailed": "Import failed"
+    }
+  },
+  "budgets": {
+    "title": "Budget",
+    "form": {
+      "editTitle": "Edit budget",
+      "setTitle": "Set budget",
+      "amount": "Amount",
+      "save": "Save",
+      "create": "Create"
+    },
+    "list": {
+      "totalBudgeted": "Total budgeted",
+      "of": "of",
+      "noBudgetSet": "No budget set",
+      "empty": "No categories yet. Create a category first to budget for it.",
+      "editAria": "Edit budget",
+      "removeAria": "Remove budget",
+      "setBudget": "Set budget"
+    },
+    "deleteConfirm": {
+      "title": "Remove budget for \"{category}\"?",
+      "description": "This only removes the budget for this month. Transactions are untouched."
+    },
+    "toasts": {
+      "added": "Budget added",
+      "addFailed": "Failed to add budget",
+      "updated": "Budget updated",
+      "updateFailed": "Failed to update budget",
+      "removed": "Budget removed",
+      "removeFailed": "Failed to remove budget"
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "newCategory": "New Category",
+    "form": {
+      "editTitle": "Edit category",
+      "newTitle": "New category",
+      "editDescription": "Rename an existing category.",
+      "newDescription": "Create a new category to track spending.",
+      "name": "Name",
+      "save": "Save",
+      "create": "Create"
+    },
+    "card": {
+      "of": "of {amount}",
+      "noBudget": "no budget",
+      "editAria": "Edit category",
+      "deleteAria": "Delete category",
+      "transactionCount": "{count, plural, one {# transaction} other {# transactions}} this month"
+    },
+    "grid": {
+      "empty": "No categories yet. Create one to start tracking."
+    },
+    "deleteConfirm": {
+      "title": "Delete \"{name}\"?",
+      "description": "Transactions in this category will keep their data but lose the link."
+    },
+    "toasts": {
+      "added": "Category added",
+      "addFailed": "Failed to add category",
+      "updated": "Category updated",
+      "updateFailed": "Failed to update category",
+      "deleted": "Category deleted",
+      "deleteFailed": "Failed to delete category"
+    },
+    "select": {
+      "placeholder": "Select category",
+      "newName": "New category name",
+      "createNew": "+ Create new category"
+    }
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "dateRequired": "Date is required",
+    "amountRequired": "Amount is required",
+    "descriptionRequired": "Description is required"
+  },
+  "language": {
+    "switcher": "Language",
+    "en": "English",
+    "fi": "Finnish"
+  }
+}

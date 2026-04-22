@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Select,
   SelectContent,
@@ -25,9 +26,11 @@ interface CategorySelectProps {
 export default function CategorySelect({
   value,
   onChange,
-  placeholder = "Select category",
+  placeholder,
   className,
 }: CategorySelectProps) {
+  const t = useTranslations("categories.select");
+  const tCommon = useTranslations("common");
   const utils = trpc.useUtils();
   const { data: categories = [] } = trpc.category.getAll.useQuery();
   const addCategory = trpc.category.add.useMutation();
@@ -63,7 +66,7 @@ export default function CategorySelect({
       <div className={`flex gap-2 ${className ?? ""}`}>
         <Input
           autoFocus
-          placeholder="New category name"
+          placeholder={t("newName")}
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => {
@@ -79,10 +82,10 @@ export default function CategorySelect({
           onClick={handleCreate}
           disabled={addCategory.isPending || !name.trim()}
         >
-          {addCategory.isPending ? <Spinner /> : "Add"}
+          {addCategory.isPending ? <Spinner /> : tCommon("add")}
         </Button>
         <Button type="button" variant="outline" onClick={handleCancel}>
-          Cancel
+          {tCommon("cancel")}
         </Button>
       </div>
     );
@@ -91,7 +94,7 @@ export default function CategorySelect({
   return (
     <Select value={value} onValueChange={handleSelect}>
       <SelectTrigger className={className ?? "w-full"}>
-        <SelectValue placeholder={placeholder} />
+        <SelectValue placeholder={placeholder ?? t("placeholder")} />
       </SelectTrigger>
       <SelectContent>
         {categories.map((c) => (
@@ -100,7 +103,7 @@ export default function CategorySelect({
           </SelectItem>
         ))}
         {categories.length > 0 && <SelectSeparator />}
-        <SelectItem value={CREATE_VALUE}>+ Create new category</SelectItem>
+        <SelectItem value={CREATE_VALUE}>{t("createNew")}</SelectItem>
       </SelectContent>
     </Select>
   );

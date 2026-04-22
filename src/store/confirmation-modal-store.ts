@@ -11,15 +11,15 @@ interface ConfirmationModalStoreState {
 
 export const useConfirmationModalStore = create<ConfirmationModalStoreState>((set) => ({
     isOpen: false,
-    title: "Are you sure?",
-    description: "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+    title: "",
+    description: "",
     onConfirm: () => { },
     openConfirmModal: ({ onConfirm, title, description }) =>
-        set((state) => ({
+        set({
             isOpen: true,
             onConfirm,
-            title: title ?? state.title,
-            description: description ?? state.description,
-        })),
+            title: title ?? "",
+            description: description ?? "",
+        }),
     closeModal: () => set({ isOpen: false }),
 }))

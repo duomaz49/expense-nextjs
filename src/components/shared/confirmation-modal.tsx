@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,21 +9,25 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useTranslations } from "next-intl";
 import { useConfirmationModalStore } from "@/store/confirmation-modal-store";
 
 export default function ConfirmationModal() {
+  const t = useTranslations("common");
   const { isOpen, title, description, onConfirm, closeModal } =
     useConfirmationModalStore();
   return (
     <AlertDialog open={isOpen} onOpenChange={closeModal}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
+          <AlertDialogTitle>{title || t("areYouSure")}</AlertDialogTitle>
+          <AlertDialogDescription>
+            {description || t("defaultConfirmDescription")}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={closeModal}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Continue</AlertDialogAction>
+          <AlertDialogCancel onClick={closeModal}>{t("cancel")}</AlertDialogCancel>
+          <AlertDialogAction onClick={onConfirm}>{t("continue")}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

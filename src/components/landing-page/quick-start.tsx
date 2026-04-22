@@ -1,10 +1,13 @@
+import { useTranslations } from "next-intl";
+
 export default function QuickStart() {
+  const t = useTranslations("landing.quickStart");
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-foreground mb-4">Get Started in 30 Seconds</h3>
-          <p className="text-muted-foreground">Three simple steps to better financial tracking</p>
+          <h3 className="text-3xl font-bold text-foreground mb-4">{t("heading")}</h3>
+          <p className="text-muted-foreground">{t("subtitle")}</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <div className="text-center group">
@@ -14,8 +17,8 @@ export default function QuickStart() {
                 1
               </div>
             </div>
-            <h4 className="font-bold mb-2 text-lg">Sign Up Free</h4>
-            <p className="text-muted-foreground">Just your email, no payment info needed</p>
+            <h4 className="font-bold mb-2 text-lg">{t("step1Title")}</h4>
+            <p className="text-muted-foreground">{t("step1Desc")}</p>
           </div>
           <div className="text-center group">
             <div className="relative mb-6">
@@ -24,8 +27,8 @@ export default function QuickStart() {
                 2
               </div>
             </div>
-            <h4 className="font-bold mb-2 text-lg">Add Your First Expense</h4>
-            <p className="text-muted-foreground">Coffee, lunch, gas - track it all</p>
+            <h4 className="font-bold mb-2 text-lg">{t("step2Title")}</h4>
+            <p className="text-muted-foreground">{t("step2Desc")}</p>
           </div>
           <div className="text-center group">
             <div className="relative mb-6">
@@ -34,11 +37,11 @@ export default function QuickStart() {
                 3
               </div>
             </div>
-            <h4 className="font-bold mb-2 text-lg">See Your Patterns</h4>
-            <p className="text-muted-foreground">Watch your spending habits unfold</p>
+            <h4 className="font-bold mb-2 text-lg">{t("step3Title")}</h4>
+            <p className="text-muted-foreground">{t("step3Desc")}</p>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

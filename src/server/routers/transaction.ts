@@ -45,9 +45,7 @@ export const transactionRouter = router({
         }))
         .mutation(async ({ input, ctx }) => {
             const values = input.rows.map((r) => ({ ...r, userId: ctx.user.id }));
-            await db.transaction(async (tx) => {
-                await tx.insert(transaction).values(values);
-            });
+            await db.insert(transaction).values(values);
         }),
 
     edit: protectedProcedure
