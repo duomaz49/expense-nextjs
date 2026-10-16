@@ -36,7 +36,7 @@ export default function LanguageSwitcher() {
           <Globe className="size-3.5" />
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent position="popper" align="end" className="w-(--radix-select-trigger-width) min-w-0">
           {routing.locales.map((l) => (
             <SelectItem key={l} value={l} className="text-xs">
               {t(l)}

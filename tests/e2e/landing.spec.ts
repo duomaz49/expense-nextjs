@@ -1,5 +1,19 @@
 import {test,expect} from './fixtures';
 
+for (const path of ['/en', '/en/dashboard']) test(`language menu opens below its selector on ${path}`, async ({page}) => {
+  await page.goto(path);
+  const trigger = page.getByRole('combobox', {name: 'Language'});
+  const triggerBounds = (await trigger.boundingBox())!;
+  await trigger.click();
+  const menu = page.getByRole('listbox');
+  await expect(menu).toBeVisible();
+  await expect.poll(async () => (await menu.boundingBox())!.y).toBeGreaterThanOrEqual(triggerBounds.y + triggerBounds.height);
+  await expect.poll(async () => {
+    const bounds = (await menu.boundingBox())!;
+    return Math.abs(bounds.x + bounds.width - triggerBounds.x - triggerBounds.width);
+  }).toBeLessThanOrEqual(1);
+});
+
 for(const locale of ['en','fi']) test(`${locale} landing has valid document, truthful features, and no auth background`,async({page})=>{
   const errors:string[]=[]; const requests:string[]=[];
   page.on('pageerror', e=>errors.push(e.message)); page.on('request',r=>requests.push(r.url()));
