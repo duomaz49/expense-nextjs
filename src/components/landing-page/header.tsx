@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/components/shared/language-switcher";
 
 export default function Header() {
   const t = useTranslations("landing.header");
@@ -13,7 +14,8 @@ export default function Header() {
         <h1 className="text-2xl font-bold text-black drop-shadow-lg">{tNav("brand")}</h1>
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex flex-wrap items-center gap-3">
+        <LanguageSwitcher />
         <Button asChild size="sm">
           <Link href="/auth/sign-in">{t("signIn")}</Link>
         </Button>

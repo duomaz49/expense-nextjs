@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -15,7 +14,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import LanguageSwitcher from "@/components/shared/language-switcher"
 
 export function AppSidebar() {
   const pathname = usePathname()
@@ -55,9 +53,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <LanguageSwitcher />
-      </SidebarFooter>
     </Sidebar>
   )
 }
