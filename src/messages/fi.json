@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Menoseuranta",
-    "description": "Seuraa menojasi helposti intuitiivisella menoseurantasovelluksellamme, joka on rakennettu Next.js:llä ja NeonDB:llä."
+    "description": "Seuraa menojasi ja kulutustottumuksiasi sekä tarkastele talouttasi selkeiden yhteenvetojen ja kaavioiden avulla."
   },
   "common": {
     "save": "Tallenna",
@@ -31,75 +31,75 @@
       "getStarted": "Aloita"
     },
     "hero": {
-      "titleLine1": "Ota haltuun",
-      "titleLine2": "taloudellinen tulevaisuutesi",
-      "subtitle": "Seuraa menoja, aseta budjetteja ja saa näkemyksiä kulutustottumuksistasi intuitiivisella seuranta-alustallamme.",
-      "feature1Title": "Helppo seuranta",
-      "feature1Desc": "Lisää ja kategorisoi menosi nopeasti yksinkertaisella käyttöliittymällämme",
-      "feature2Title": "Älykkäät näkemykset",
-      "feature2Desc": "Saat yksityiskohtaisia raportteja ja näkemyksiä kulutuskäyttäytymisestäsi",
-      "feature3Title": "Budjettitavoitteet",
-      "feature3Desc": "Aseta budjetteja ja seuraa edistymistäsi taloudellisia tavoitteita kohti"
-    },
-    "foreverFree": {
-      "badge": "100 % ilmainen",
-      "heading": "Täysin ilmainen, aina",
-      "subtitle": "Ei kompastuskiviä, ei kokeilujaksoja, ei premium-lisäpalveluita. Täysi menoseuranta kaikille.",
-      "item1Title": "Ei piilokuluja",
-      "item1Desc": "Ei premium-paketteja, ei yllätysmaksuja, ei luottokorttia vaadita",
-      "item2Title": "Kaikki ominaisuudet mukana",
-      "item2Desc": "Saat täyden menoseurantakokemuksen ilman kuluja",
-      "item3Title": "Ei mainoksia",
-      "item3Desc": "Selkeä, häiriötön käyttöliittymä, joka keskittyy talouteesi"
+      "titleLine1": "Ymmärrä kulutustasi.",
+      "titleLine2": "Suunnittele budjettisi.",
+      "subtitle": "Seuraa menojasi ja kulutustottumuksiasi sekä tarkastele talouttasi selkeiden yhteenvetojen ja kaavioiden avulla.",
+      "feature1Title": "Seuraa tuloja ja menoja",
+      "feature1Desc": "Kirjaa tapahtumat päivämäärän, summan, kuvauksen ja kategorian kanssa.",
+      "feature2Title": "Näe, mihin rahasi kuluvat",
+      "feature2Desc": "Tarkastele tuloja, menoja ja kulutuksen jakautumista kojelaudalla.",
+      "feature3Title": "Aseta kuukausibudjetit",
+      "feature3Desc": "Aseta kategorioille budjetit ja vertaa niitä toteutuneisiin menoihin."
     },
     "quickStart": {
-      "heading": "Aloita 30 sekunnissa",
-      "subtitle": "Kolme yksinkertaista askelta parempaan talouden seurantaan",
-      "step1Title": "Rekisteröidy ilmaiseksi",
-      "step1Desc": "Vain sähköpostiosoite, ei maksutietoja",
-      "step2Title": "Lisää ensimmäinen meno",
-      "step2Desc": "Kahvi, lounas, bensa – seuraa kaikkea",
-      "step3Title": "Näe kulutusmalleistasi",
-      "step3Desc": "Huomaa kulutustottumuksesi avautuvan"
+      "heading": "Aloita kolmessa vaiheessa",
+      "subtitle": "Ensimmäisestä tapahtumasta oman kulutuksen tarkasteluun",
+      "step1Title": "Luo käyttäjätili",
+      "step1Desc": "Rekisteröidy ja kirjaudu omaan työtilaasi.",
+      "step2Title": "Lisää tapahtumasi",
+      "step2Desc": "Kirjaa tulot ja menot tai esikatsele ja tuo Nordean CSV-tiedosto.",
+      "step3Title": "Tutki kojelautaa",
+      "step3Desc": "Tarkastele menoja kategorioittain ja vertaa niitä kuukausibudjetteihin."
     },
     "features": {
-      "heading": "Kaikki mitä tarvitset",
-      "subtitle": "Tehokkaita ominaisuuksia, jotka eivät maksa penniäkään",
-      "visualReportsTitle": "Visuaaliset raportit",
-      "visualReportsDesc": "Kaaviot ja graafit havainnollistavat kulutuskäyttäytymisesi selkeästi",
-      "smartCategoriesTitle": "Älykkäät kategoriat",
-      "smartCategoriesDesc": "Kategorisoi menosi automaattisesti älykkäillä ehdotuksilla",
-      "multipleAccountsTitle": "Useita tilejä",
-      "multipleAccountsDesc": "Seuraa menoja käteisen, luottokorttien ja pankkitilien välillä",
-      "monthlyBudgetsTitle": "Kuukausibudjetit",
-      "monthlyBudgetsDesc": "Aseta kulutusrajat ja seuraa edistymistäsi tavoitteita kohti",
-      "searchFilterTitle": "Haku ja suodatus",
-      "searchFilterDesc": "Löydä mikä tahansa meno nopeasti tehokkailla hakutoiminnoilla",
-      "mobileFriendlyTitle": "Mobiiliystävällinen",
-      "mobileFriendlyDesc": "Täydellinen responsiivinen design, joka toimii saumattomasti kaikilla laitteilla"
+      "heading": "Työkalut arjen menojen seurantaan",
+      "subtitle": "Kirjaa, järjestä ja ymmärrä talouttasi",
+      "visualReportsTitle": "Kojelaudan kaaviot",
+      "visualReportsDesc": "Tarkastele tuloja, menoja, nettosummaa ja kategorioiden kulutusta valitsemaltasi ajanjaksolta.",
+      "categoriesTitle": "Omat kategoriat",
+      "categoriesDesc": "Luo ja nimeä kategorioita sekä valitse tapahtumillesi sopiva kategoria.",
+      "csvImportTitle": "Nordean CSV-tuonti",
+      "csvImportDesc": "Esikatsele tuetun Nordean CSV-tiedoston tapahtumat ennen tuontia.",
+      "monthlyBudgetsTitle": "Kategorioiden kuukausibudjetit",
+      "monthlyBudgetsDesc": "Aseta kategorioille budjettisummat ja vertaa niitä toteutuneisiin menoihin.",
+      "filtersTitle": "Tapahtumien suodatus",
+      "filtersDesc": "Suodata tapahtumia aikavälin ja kategorian mukaan sekä lajittele taulukkoa.",
+      "mobileFriendlyTitle": "Responsiivinen verkkosovellus",
+      "mobileFriendlyDesc": "Hallitse talouttasi tietokoneen tai puhelimen selaimella."
     },
     "trust": {
-      "heading": "Tietosi ovat suojassa",
-      "secureTitle": "🔒 Turvallinen oletuksena",
-      "secureDesc": "HTTPS-salaus ja turvallinen tietokantatallennus suojaavat tietojasi",
-      "privacyTitle": "🏠 Yksityisyys etusijalla",
-      "privacyDesc": "Menotietosi ovat sinun – emme jaa tai myy tietojasi"
+      "heading": "Rakennettu oman talouden seurantaan",
+      "secureTitle": "Turvallinen kirjautuminen",
+      "secureDesc": "Tunnistautuminen suojaa pääsyä omaan työtilaasi.",
+      "privacyTitle": "Tilikohtaiset tiedot",
+      "privacyDesc": "Tapahtumat, kategoriat ja budjetit tallennetaan PostgreSQL-tietokantaan ja liitetään kirjautuneen käyttäjän tiliin."
     },
     "cta": {
-      "heading": "Valmis ottamaan ohjat?",
-      "subtitle": "Liity tuhansiin, jotka ovat mullistaneet taloutensa ilmaisella menoseurantasovelluksellamme",
-      "button": "Aloita seuranta ilmaiseksi →"
+      "heading": "Opi tuntemaan kulutuksesi",
+      "subtitle": "Lisää tapahtumasi, järjestä kategoriat ja näe, mihin rahasi kuluvat.",
+      "button": "Luo käyttäjätili →"
     },
     "faq": {
       "heading": "Usein kysytyt kysymykset",
-      "q1": "Onko tämä todella ilmainen ikuisesti?",
-      "a1": "Kyllä! Ei kokeiluja, ei premium-paketteja, ei piilomaksuja. Uskomme, että jokainen ansaitsee pääsyn hyviin talouden työkaluihin.",
-      "q2": "Tekeekö tämä sovellus mitään voittoa?",
-      "a2": "Emme tee! Tämä on intohimoprojekti, joka yhdistää rakkautemme talouden voimaannuttamiseen ja ohjelmistokehitykseen. Uskomme, että jokainen ansaitsee pääsyn laadukkaisiin talouden työkaluihin.",
-      "q3": "Onko taloudelliset tietoni turvassa?",
-      "a3": "Kyllä! Käytämme HTTPS-salausta tiedonsiirrossa ja turvallista tietokantatallennusta. Henkilökohtaisia taloudellisia tietojasi ei koskaan jaeta kolmansille osapuolille.",
-      "q4": "Voinko käyttää sovellusta puhelimella?",
-      "a4": "Kyllä! Verkkosovelluksemme toimii täydellisesti mobiililaitteilla."
+      "q1": "Mitä voin seurata?",
+      "a1": "Voit kirjata tulot ja menot, järjestää ne omiin kategorioihisi ja asettaa kategorioille kuukausibudjetit. Kojelauta näyttää yhteenvedot, kaaviot ja budjettivertailut.",
+      "q2": "Voinko yhdistää pankkitilini?",
+      "a2": "Automaattista pankkiyhteyttä ei ole. Voit lisätä tapahtumat käsin tai tuoda tuetun Nordean CSV-tiedoston esikatselun jälkeen.",
+      "q3": "Luokitellaanko tapahtumat automaattisesti?",
+      "a3": "Valitset kategoriat itse. Luo kulutukseesi sopivat kategoriat ja valitse ne tapahtumia lisätessäsi tai muokatessasi.",
+      "q4": "Voinko käyttää sovellusta puhelimella ja vaihtaa kieltä?",
+      "a4": "Kyllä. Responsiivinen verkkosovellus toimii puhelimen selaimessa. Kielivalikosta voit vaihtaa suomen ja englannin välillä."
+    },
+    "overview": {
+      "badge": "Taloutesi yhdessä paikassa",
+      "heading": "Selkeämpi kuva arjen taloudesta",
+      "subtitle": "Responsiivinen taloussovellus, jossa turvallinen kirjautuminen ja PostgreSQL-tietokanta tukevat menojen seurantaa ja visuaalisia yhteenvetoja.",
+      "item1Title": "Oma tapahtumahistoria",
+      "item1Desc": "Lisää, muokkaa ja poista tuloja ja menoja tarpeen mukaan.",
+      "item2Title": "Tietokoneella ja puhelimella",
+      "item2Desc": "Käytä verkkosovellusta selaimessa suomeksi tai englanniksi.",
+      "item3Title": "Oma työtila",
+      "item3Desc": "Kirjaudu hallitsemaan tiliisi liitettyjä tapahtumia, kategorioita ja budjetteja."
     }
   },
   "dashboard": {

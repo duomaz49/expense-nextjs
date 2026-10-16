@@ -3,8 +3,8 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { DollarSign, Smartphone, Shield } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export default function ForeverFree() {
-  const t = useTranslations("landing.foreverFree");
+export default function AppOverview() {
+  const t = useTranslations("landing.overview");
   return (
     <section className="py-16 bg-green-50/50 border-t">
       <div className="container mx-auto px-4">

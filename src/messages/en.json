@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Expense Tracker",
-    "description": "Track your expenses with ease using our intuitive expense tracker app built with Next.js and NeonDB."
+    "description": "Track expenses, monitor spending habits, and gain insights through clear dashboards and visual analytics."
   },
   "common": {
     "save": "Save",
@@ -31,75 +31,75 @@
       "getStarted": "Get Started"
     },
     "hero": {
-      "titleLine1": "Take Control of Your",
-      "titleLine2": "Financial Future",
-      "subtitle": "Track expenses, set budgets, and gain insights into your spending habits with our intuitive expense tracking platform.",
-      "feature1Title": "Easy Tracking",
-      "feature1Desc": "Quickly add and categorize your expenses with our simple interface",
-      "feature2Title": "Smart Insights",
-      "feature2Desc": "Get detailed reports and insights about your spending patterns",
-      "feature3Title": "Budget Goals",
-      "feature3Desc": "Set budgets and track your progress towards financial goals"
-    },
-    "foreverFree": {
-      "badge": "100% Free",
-      "heading": "Completely Free, Forever",
-      "subtitle": "No catches, no trials, no premium upsells. Full expense tracking for everyone.",
-      "item1Title": "No Hidden Costs",
-      "item1Desc": "No premium plans, no surprise charges, no credit card required",
-      "item2Title": "All Features Included",
-      "item2Desc": "Get the complete expense tracking experience at zero cost",
-      "item3Title": "No Ads",
-      "item3Desc": "Clean, distraction-free interface focused on your finances"
+      "titleLine1": "Understand your spending.",
+      "titleLine2": "Plan your budget.",
+      "subtitle": "Track expenses, monitor spending habits, and gain insights through clear dashboards and visual analytics.",
+      "feature1Title": "Track income and expenses",
+      "feature1Desc": "Record transactions with a date, amount, description, and category.",
+      "feature2Title": "See your spending",
+      "feature2Desc": "Explore income, expenses, and category breakdowns in your dashboard.",
+      "feature3Title": "Set monthly budgets",
+      "feature3Desc": "Set a budget for each category and compare it with your spending."
     },
     "quickStart": {
-      "heading": "Get Started in 30 Seconds",
-      "subtitle": "Three simple steps to better financial tracking",
-      "step1Title": "Sign Up Free",
-      "step1Desc": "Just your email, no payment info needed",
-      "step2Title": "Add Your First Expense",
-      "step2Desc": "Coffee, lunch, gas - track it all",
-      "step3Title": "See Your Patterns",
-      "step3Desc": "Watch your spending habits unfold"
+      "heading": "Get started in three steps",
+      "subtitle": "From your first transaction to a view of your spending",
+      "step1Title": "Create an account",
+      "step1Desc": "Sign up and sign in to your personal workspace.",
+      "step2Title": "Add your transactions",
+      "step2Desc": "Enter income and expenses, or preview and import a Nordea CSV file.",
+      "step3Title": "Explore your dashboard",
+      "step3Desc": "Review spending by category and compare it with your monthly budgets."
     },
     "features": {
-      "heading": "Everything You Need",
-      "subtitle": "Powerful features that don't cost a penny",
-      "visualReportsTitle": "Visual Reports",
-      "visualReportsDesc": "Charts and graphs to visualize your spending patterns clearly",
-      "smartCategoriesTitle": "Smart Categories",
-      "smartCategoriesDesc": "Automatically categorize your expenses with intelligent suggestions",
-      "multipleAccountsTitle": "Multiple Accounts",
-      "multipleAccountsDesc": "Track expenses across cash, credit cards, and bank accounts",
-      "monthlyBudgetsTitle": "Monthly Budgets",
-      "monthlyBudgetsDesc": "Set spending limits and monitor your progress towards goals",
-      "searchFilterTitle": "Search & Filter",
-      "searchFilterDesc": "Find any expense quickly with powerful search and filters",
-      "mobileFriendlyTitle": "Mobile Friendly",
-      "mobileFriendlyDesc": "Perfect responsive design that works seamlessly on any device"
+      "heading": "Tools for everyday expense tracking",
+      "subtitle": "Record, organize, and understand your finances",
+      "visualReportsTitle": "Dashboard charts",
+      "visualReportsDesc": "View income, expenses, net totals, and spending by category for your selected period.",
+      "categoriesTitle": "Custom categories",
+      "categoriesDesc": "Create and rename categories, then choose a category for your transactions.",
+      "csvImportTitle": "Nordea CSV import",
+      "csvImportDesc": "Preview transactions from a supported Nordea CSV file before importing them.",
+      "monthlyBudgetsTitle": "Monthly category budgets",
+      "monthlyBudgetsDesc": "Set spending amounts for each category and compare budgets with actual expenses.",
+      "filtersTitle": "Transaction filters",
+      "filtersDesc": "Filter transactions by date range and category, and sort the table.",
+      "mobileFriendlyTitle": "Responsive web app",
+      "mobileFriendlyDesc": "Manage your finances from a desktop or mobile browser."
     },
     "trust": {
-      "heading": "Your Data is Protected",
-      "secureTitle": "🔒 Secure by Default",
-      "secureDesc": "HTTPS encryption and secure database storage protect your information",
-      "privacyTitle": "🏠 Privacy Focused",
-      "privacyDesc": "Your expense data is yours - we don't share or sell your information"
+      "heading": "Built for your personal finances",
+      "secureTitle": "Secure sign-in",
+      "secureDesc": "Authentication protects access to your personal workspace.",
+      "privacyTitle": "Account-based records",
+      "privacyDesc": "Your transactions, categories, and budgets are stored in PostgreSQL and linked to your signed-in account."
     },
     "cta": {
-      "heading": "Ready to Take Control?",
-      "subtitle": "Join thousands who've transformed their finances with our free expense tracker",
-      "button": "Start Tracking Free →"
+      "heading": "Start understanding your spending",
+      "subtitle": "Add your transactions, organize your categories, and see where your money goes.",
+      "button": "Create an account →"
     },
     "faq": {
-      "heading": "Frequently Asked Questions",
-      "q1": "Is it really free forever?",
-      "a1": "Yes! No trials, no premium plans, no hidden fees. We believe everyone deserves access to good financial tools.",
-      "q2": "Does this app make any profit?",
-      "a2": "We don't! This is a passion project combining our love for financial empowerment and software development. We believe everyone deserves access to quality financial tools.",
-      "q3": "Is my financial data secure?",
-      "a3": "Yes! We use HTTPS encryption for data in transit and secure database storage. Your personal financial information is never shared with third parties.",
-      "q4": "Can I use it on my phone?",
-      "a4": "Yes! Our web app works perfectly on mobile."
+      "heading": "Frequently asked questions",
+      "q1": "What can I track?",
+      "a1": "Record income and expenses, organize them into your own categories, and set monthly category budgets. The dashboard shows totals, charts, and budget comparisons.",
+      "q2": "Can I connect my bank account?",
+      "a2": "There is no automatic bank connection. You can add transactions manually or import a supported Nordea CSV file after reviewing the preview.",
+      "q3": "Are categories assigned automatically?",
+      "a3": "You choose categories yourself. Create categories to suit your spending and assign them when adding or editing transactions.",
+      "q4": "Can I use it on my phone and change languages?",
+      "a4": "Yes. The responsive web app works in a mobile browser, and you can switch between English and Finnish using the language menu."
+    },
+    "overview": {
+      "badge": "Your finances in one place",
+      "heading": "A clearer view of everyday finances",
+      "subtitle": "A responsive finance app with secure sign-in and a PostgreSQL database, built around expense tracking and visual insights.",
+      "item1Title": "Your transaction history",
+      "item1Desc": "Add, edit, and delete income and expenses as your records change.",
+      "item2Title": "On desktop and mobile",
+      "item2Desc": "Use the web app in your browser, in English or Finnish.",
+      "item3Title": "Your own workspace",
+      "item3Desc": "Sign in to manage the transactions, categories, and budgets linked to your account."
     }
   },
   "dashboard": {

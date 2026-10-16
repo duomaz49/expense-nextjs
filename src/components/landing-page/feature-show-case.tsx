@@ -1,11 +1,11 @@
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Smartphone, BarChart3, Tag, CreditCard, Calendar, Search } from "lucide-react";
+import { Smartphone, BarChart3, Tag, FileUp, Calendar, ListFilter } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function FeatureShowCase() {
   const t = useTranslations("landing.features");
   return (
-    <section className="py-16 bg-muted/30">
+    <section id="features" className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h3 className="text-3xl font-bold text-foreground mb-4">{t("heading")}</h3>
@@ -31,9 +31,9 @@ export default function FeatureShowCase() {
                 <div className="w-10 h-10 bg-emerald-200 rounded-xl flex items-center justify-center">
                   <Tag className="w-5 h-5 text-emerald-700" />
                 </div>
-                <CardTitle className="text-lg text-emerald-900">{t("smartCategoriesTitle")}</CardTitle>
+                <CardTitle className="text-lg text-emerald-900">{t("categoriesTitle")}</CardTitle>
               </div>
-              <CardDescription className="text-emerald-800">{t("smartCategoriesDesc")}</CardDescription>
+              <CardDescription className="text-emerald-800">{t("categoriesDesc")}</CardDescription>
             </CardHeader>
           </Card>
           <Card
@@ -41,11 +41,11 @@ export default function FeatureShowCase() {
             <CardHeader className="pb-6">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center">
-                  <CreditCard className="w-5 h-5 text-violet-600" />
+                  <FileUp className="w-5 h-5 text-violet-600" />
                 </div>
-                <CardTitle className="text-lg text-violet-900">{t("multipleAccountsTitle")}</CardTitle>
+                <CardTitle className="text-lg text-violet-900">{t("csvImportTitle")}</CardTitle>
               </div>
-              <CardDescription className="text-violet-700">{t("multipleAccountsDesc")}</CardDescription>
+              <CardDescription className="text-violet-700">{t("csvImportDesc")}</CardDescription>
             </CardHeader>
           </Card>
           <Card
@@ -65,11 +65,11 @@ export default function FeatureShowCase() {
             <CardHeader className="pb-6">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center">
-                  <Search className="w-5 h-5 text-rose-600" />
+                  <ListFilter className="w-5 h-5 text-rose-600" />
                 </div>
-                <CardTitle className="text-lg text-rose-900">{t("searchFilterTitle")}</CardTitle>
+                <CardTitle className="text-lg text-rose-900">{t("filtersTitle")}</CardTitle>
               </div>
-              <CardDescription className="text-rose-700">{t("searchFilterDesc")}</CardDescription>
+              <CardDescription className="text-rose-700">{t("filtersDesc")}</CardDescription>
             </CardHeader>
           </Card>
           <Card
