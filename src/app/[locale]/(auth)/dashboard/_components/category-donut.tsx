@@ -19,6 +19,7 @@ interface CategoryRow {
 
 interface Props {
     data: CategoryRow[];
+    periodLabel: string;
 }
 
 const PALETTE = [
@@ -29,7 +30,7 @@ const PALETTE = [
     "var(--chart-5)",
 ];
 
-export default function CategoryDonut({ data }: Props) {
+export default function CategoryDonut({ data, periodLabel }: Props) {
     const locale = useLocale();
     const t = useTranslations("dashboard.categoryDonut");
     const positive = data.filter((r) => r.spent > 0);
@@ -41,7 +42,7 @@ export default function CategoryDonut({ data }: Props) {
 
     return (
         <div className="border p-3 space-y-2 h-full">
-            <div className="text-xs text-muted-foreground">{t("byCategory")}</div>
+            <div className="text-xs text-muted-foreground">{t("byCategory")} · {periodLabel}</div>
             {positive.length === 0 ? (
                 <div className="flex h-56 items-center justify-center text-xs text-muted-foreground">
                     {t("noSpending")}

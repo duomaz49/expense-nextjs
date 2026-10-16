@@ -112,21 +112,27 @@
       "vsLastMonth": "% vs. viime kuukausi",
       "vsLastYear": "% vs. viime vuosi",
       "thisMonth": "Tässä kuussa",
-      "thisYear": "Tänä vuonna"
+      "thisYear": "Tänä vuonna",
+      "allTime": "Koko ajalta"
     },
     "monthlyChart": {
-      "last6Months": "Viimeiset 6 kuukautta",
       "spent": "Menot",
-      "income": "Tulot"
+      "income": "Tulot",
+      "month": "Tässä kuussa · päivittäin",
+      "year": "Tänä vuonna · kuukausittain",
+      "all": "Koko ajalta · kuukausittain"
     },
     "categoryDonut": {
       "byCategory": "Kategorioittain",
-      "noSpending": "Ei menoja tässä kuussa"
+      "noSpending": "Ei kategorioituja menoja tällä ajanjaksolla"
     },
     "budgetVsActual": {
       "heading": "Budjetti vs. toteuma",
-      "empty": "Budjetteja ei ole asetettu tälle kuulle. Lisää Budjetit-sivulta."
-    }
+      "empty": "Tälle ajanjaksolle ei ole asetettu budjetteja. Lisää budjetti Budjetit-sivulla."
+    },
+    "period": "Ajanjakso",
+    "loadError": "Kojelaudan lataaminen epäonnistui.",
+    "retry": "Yritä uudelleen"
   },
   "transactions": {
     "title": "Tapahtumat",

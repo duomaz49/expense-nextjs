@@ -13,7 +13,7 @@ interface Totals {
 
 interface Props {
     current: Totals;
-    previous: Totals;
+    previous: Totals | null;
     vsLabel: string;
 }
 
@@ -64,28 +64,28 @@ export default function KpiStrip({ current, previous, vsLabel }: Props) {
             <Card
                 label={t("income")}
                 value={formatCurrency(current.income, locale)}
-                deltaPct={delta(current.income, previous.income)}
+                deltaPct={previous ? delta(current.income, previous.income) : null}
                 deltaIsGood={(p) => p >= 0}
                 vsLabel={vsLabel}
             />
             <Card
                 label={t("spent")}
                 value={formatCurrency(current.spent, locale)}
-                deltaPct={delta(current.spent, previous.spent)}
+                deltaPct={previous ? delta(current.spent, previous.spent) : null}
                 deltaIsGood={(p) => p <= 0}
                 vsLabel={vsLabel}
             />
             <Card
                 label={t("net")}
                 value={formatCurrency(current.net, locale)}
-                deltaPct={delta(current.net, previous.net)}
+                deltaPct={previous ? delta(current.net, previous.net) : null}
                 deltaIsGood={(p) => p >= 0}
                 vsLabel={vsLabel}
             />
             <Card
                 label={t("transactions")}
                 value={String(current.count)}
-                deltaPct={delta(current.count, previous.count)}
+                deltaPct={previous ? delta(current.count, previous.count) : null}
                 deltaIsGood={() => true}
                 vsLabel={vsLabel}
             />

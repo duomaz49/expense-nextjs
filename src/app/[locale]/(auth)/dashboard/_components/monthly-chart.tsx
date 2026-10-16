@@ -8,7 +8,6 @@ import {
     ChartTooltipContent,
     type ChartConfig,
 } from "@/components/ui/chart";
-import { formatMonthShort } from "@/lib/formatters";
 
 interface MonthlyRow {
     month: string;
@@ -19,9 +18,10 @@ interface MonthlyRow {
 
 interface Props {
     data: MonthlyRow[];
+    period: "month" | "year" | "all";
 }
 
-export default function MonthlyChart({ data }: Props) {
+export default function MonthlyChart({ data, period }: Props) {
     const locale = useLocale();
     const t = useTranslations("dashboard.monthlyChart");
 
@@ -30,15 +30,21 @@ export default function MonthlyChart({ data }: Props) {
         income: { label: t("income"), color: "var(--chart-2)" },
     } satisfies ChartConfig;
 
+    const dateFormat = new Intl.DateTimeFormat(locale, {
+        timeZone: "UTC",
+        ...(period === "month" ? { day: "numeric", month: "short" } as const
+            : period === "all" ? { month: "short", year: "numeric" } as const
+                : { month: "short" } as const),
+    });
     const chartData = data.map((r) => ({
-        month: formatMonthShort(r.month, locale),
+        month: dateFormat.format(new Date(r.month)),
         spent: r.spent,
         income: r.income,
     }));
 
     return (
         <div className="border p-3 space-y-2">
-            <div className="text-xs text-muted-foreground">{t("last6Months")}</div>
+            <div className="text-xs text-muted-foreground">{t(period)}</div>
             <ChartContainer config={config} className="h-56 w-full">
                 <BarChart data={chartData}>
                     <CartesianGrid vertical={false} />

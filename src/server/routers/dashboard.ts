@@ -1,126 +1,114 @@
 import { router, protectedProcedure } from "../trpc";
 import { db } from "@/db";
 import { budget, category, transaction } from "@/db/schema";
-import { and, eq, gte, lt, sql } from "drizzle-orm";
-
-const monthBoundary = (year: number, month: number) =>
-    new Date(Date.UTC(year, month, 1));
+import { and, eq, gte, lt, sql, type SQL } from "drizzle-orm";
+import { z } from "zod";
 
 export const dashboardRouter = router({
-    getSummary: protectedProcedure.query(async ({ ctx }) => {
-        const userId = ctx.user.id;
-        const now = new Date();
-        const monthStart = monthBoundary(now.getUTCFullYear(), now.getUTCMonth());
-        const nextMonth = monthBoundary(now.getUTCFullYear(), now.getUTCMonth() + 1);
-        const prevMonth = monthBoundary(now.getUTCFullYear(), now.getUTCMonth() - 1);
-        const sixMonthsBack = monthBoundary(now.getUTCFullYear(), now.getUTCMonth() - 5);
-        const yearStart = monthBoundary(now.getUTCFullYear(), 0);
-        const nextYear = monthBoundary(now.getUTCFullYear() + 1, 0);
-        const prevYearStart = monthBoundary(now.getUTCFullYear() - 1, 0);
-
-        const totalsForRange = (startIso: string, endIso: string) =>
-            db
+    getSummary: protectedProcedure
+        .input(z.object({
+            period: z.enum(["month", "year", "all"]),
+            timeZone: z.string().max(100).refine((value) => {
+                try { new Intl.DateTimeFormat("en", { timeZone: value }); return true; }
+                catch { return false; }
+            }, "Invalid time zone").default("UTC"),
+        }))
+        .query(async ({ ctx, input }) => {
+            const userId = ctx.user.id;
+            const unit = input.period === "year" ? "year" : "month";
+            const interval = input.period === "year" ? sql`INTERVAL '1 year'` : sql`INTERVAL '1 month'`;
+            const localStart = sql`DATE_TRUNC(${unit}, CURRENT_TIMESTAMP AT TIME ZONE ${input.timeZone})`;
+            const start = input.period === "all" ? null : sql`(${localStart} AT TIME ZONE ${input.timeZone})`;
+            const end = input.period === "all" ? null : sql`((${localStart} + ${interval}) AT TIME ZONE ${input.timeZone})`;
+            const previousStart = sql`((${localStart} - ${interval}) AT TIME ZONE ${input.timeZone})`;
+            const transactionRange = and(
+                eq(transaction.userId, userId),
+                start ? gte(transaction.date, start) : undefined,
+                end ? lt(transaction.date, end) : undefined,
+            );
+            const totalsForRange = (where: SQL | undefined) => db
                 .select({
                     income: sql<string>`COALESCE(SUM(CASE WHEN ${transaction.amount} > 0 THEN ${transaction.amount} ELSE 0 END), 0)`,
                     spent: sql<string>`COALESCE(SUM(CASE WHEN ${transaction.amount} < 0 THEN ABS(${transaction.amount}) ELSE 0 END), 0)`,
                     count: sql<number>`COUNT(*)::int`,
                 })
                 .from(transaction)
-                .where(
-                    and(
-                        eq(transaction.userId, userId),
-                        gte(transaction.date, startIso),
-                        lt(transaction.date, endIso),
-                    ),
-                );
+                .where(where);
 
-        const [current] = await totalsForRange(monthStart.toISOString(), nextMonth.toISOString());
-        const [previous] = await totalsForRange(prevMonth.toISOString(), monthStart.toISOString());
-        const [currentYear] = await totalsForRange(yearStart.toISOString(), nextYear.toISOString());
-        const [previousYear] = await totalsForRange(prevYearStart.toISOString(), yearStart.toISOString());
+            const bucket = input.period === "month"
+                ? sql`DATE_TRUNC('day', ${transaction.date} AT TIME ZONE ${input.timeZone})`
+                : sql`DATE_TRUNC('month', ${transaction.date} AT TIME ZONE ${input.timeZone})`;
 
-        const monthlyRows = await db
-            .select({
-                month: sql<string>`DATE_TRUNC('month', ${transaction.date})`.as("month"),
-                income: sql<string>`COALESCE(SUM(CASE WHEN ${transaction.amount} > 0 THEN ${transaction.amount} ELSE 0 END), 0)`,
-                spent: sql<string>`COALESCE(SUM(CASE WHEN ${transaction.amount} < 0 THEN ABS(${transaction.amount}) ELSE 0 END), 0)`,
-                count: sql<number>`COUNT(*)::int`,
-            })
-            .from(transaction)
-            .where(
-                and(
+            // Aggregate expenses and budgets separately so multiple months cannot multiply either total.
+            const spending = db.select({
+                categoryId: transaction.categoryId,
+                spent: sql<string>`SUM(ABS(${transaction.amount}))`.as("spent"),
+            }).from(transaction)
+                .where(and(transactionRange, lt(transaction.amount, "0")))
+                .groupBy(transaction.categoryId)
+                .as("spending");
+            const budgets = db.select({
+                categoryId: budget.categoryId,
+                amount: sql<string>`SUM(${budget.amount})`.as("budget_amount"),
+            }).from(budget)
+                .where(and(
+                    eq(budget.userId, userId),
+                    // Budgets store calendar months at UTC midnight, not local transaction instants.
+                    start ? gte(budget.month, sql`(${localStart} AT TIME ZONE 'UTC')`) : undefined,
+                    end ? lt(budget.month, sql`((${localStart} + ${interval}) AT TIME ZONE 'UTC')`) : undefined,
+                ))
+                .groupBy(budget.categoryId)
+                .as("budgets");
+
+            const [[current], previousRows, monthlyRows, byCategory] = await Promise.all([
+                totalsForRange(transactionRange),
+                start ? totalsForRange(and(
                     eq(transaction.userId, userId),
-                    gte(transaction.date, sixMonthsBack.toISOString()),
-                    lt(transaction.date, nextMonth.toISOString()),
-                ),
-            )
-            .groupBy(sql`DATE_TRUNC('month', ${transaction.date})`)
-            .orderBy(sql`DATE_TRUNC('month', ${transaction.date})`);
+                    gte(transaction.date, previousStart),
+                    lt(transaction.date, start),
+                )) : Promise.resolve(null),
+                db.select({
+                    month: sql<string>`TO_CHAR(${bucket}, 'YYYY-MM-DD')`.as("month"),
+                    income: sql<string>`COALESCE(SUM(CASE WHEN ${transaction.amount} > 0 THEN ${transaction.amount} ELSE 0 END), 0)`,
+                    spent: sql<string>`COALESCE(SUM(CASE WHEN ${transaction.amount} < 0 THEN ABS(${transaction.amount}) ELSE 0 END), 0)`,
+                    count: sql<number>`COUNT(*)::int`,
+                }).from(transaction)
+                    .where(transactionRange)
+                    .groupBy(sql`"month"`)
+                    .orderBy(sql`"month"`),
+                db.select({
+                    categoryId: category.id,
+                    categoryName: category.name,
+                    spent: sql<string>`COALESCE(${spending.spent}, 0)`,
+                    budgetAmount: budgets.amount,
+                }).from(category)
+                    .leftJoin(spending, eq(spending.categoryId, category.id))
+                    .leftJoin(budgets, eq(budgets.categoryId, category.id))
+                    .where(eq(category.userId, userId)),
+            ]);
 
-        const byCategory = await db
-            .select({
-                categoryId: category.id,
-                categoryName: category.name,
-                spent: sql<string>`COALESCE(-SUM(${transaction.amount}), 0)`.as("spent"),
-                budgetAmount: budget.amount,
-            })
-            .from(category)
-            .leftJoin(
-                transaction,
-                and(
-                    eq(transaction.categoryId, category.id),
-                    gte(transaction.date, monthStart.toISOString()),
-                    lt(transaction.date, nextMonth.toISOString()),
-                ),
-            )
-            .leftJoin(
-                budget,
-                and(
-                    eq(budget.categoryId, category.id),
-                    gte(budget.month, monthStart.toISOString()),
-                    lt(budget.month, nextMonth.toISOString()),
-                ),
-            )
-            .where(eq(category.userId, userId))
-            .groupBy(category.id, category.name, budget.amount);
+            const totals = (row: typeof current) => ({
+                income: Number(row.income),
+                spent: Number(row.spent),
+                net: Number(row.income) - Number(row.spent),
+                count: row.count,
+            });
 
-        return {
-            current: {
-                income: Number(current.income),
-                spent: Number(current.spent),
-                net: Number(current.income) - Number(current.spent),
-                count: current.count,
-            },
-            previous: {
-                income: Number(previous.income),
-                spent: Number(previous.spent),
-                net: Number(previous.income) - Number(previous.spent),
-                count: previous.count,
-            },
-            currentYear: {
-                income: Number(currentYear.income),
-                spent: Number(currentYear.spent),
-                net: Number(currentYear.income) - Number(currentYear.spent),
-                count: currentYear.count,
-            },
-            previousYear: {
-                income: Number(previousYear.income),
-                spent: Number(previousYear.spent),
-                net: Number(previousYear.income) - Number(previousYear.spent),
-                count: previousYear.count,
-            },
-            monthly: monthlyRows.map((r) => ({
-                month: r.month,
-                income: Number(r.income),
-                spent: Number(r.spent),
-                count: r.count,
-            })),
-            byCategory: byCategory.map((r) => ({
-                categoryId: r.categoryId,
-                categoryName: r.categoryName,
-                spent: Number(r.spent),
-                budget: r.budgetAmount != null ? Number(r.budgetAmount) : null,
-            })),
-        };
-    }),
+            return {
+                current: totals(current),
+                previous: previousRows ? totals(previousRows[0]) : null,
+                monthly: monthlyRows.map((r) => ({
+                    month: r.month,
+                    income: Number(r.income),
+                    spent: Number(r.spent),
+                    count: r.count,
+                })),
+                byCategory: byCategory.map((r) => ({
+                    categoryId: r.categoryId,
+                    categoryName: r.categoryName,
+                    spent: Number(r.spent),
+                    budget: r.budgetAmount != null ? Number(r.budgetAmount) : null,
+                })),
+            };
+        }),
 });

@@ -112,21 +112,27 @@
       "vsLastMonth": "% vs last month",
       "vsLastYear": "% vs last year",
       "thisMonth": "This month",
-      "thisYear": "This year"
+      "thisYear": "This year",
+      "allTime": "All time"
     },
     "monthlyChart": {
-      "last6Months": "Last 6 months",
       "spent": "Spent",
-      "income": "Income"
+      "income": "Income",
+      "month": "This month · daily",
+      "year": "This year · monthly",
+      "all": "All time · monthly"
     },
     "categoryDonut": {
       "byCategory": "By category",
-      "noSpending": "No spending this month"
+      "noSpending": "No categorized spending in this period"
     },
     "budgetVsActual": {
       "heading": "Budget vs actual",
-      "empty": "No budgets set this month. Head to Budgets to add one."
-    }
+      "empty": "No budgets set for this period. Head to Budgets to add one."
+    },
+    "period": "Time period",
+    "loadError": "Could not load the dashboard.",
+    "retry": "Try again"
   },
   "transactions": {
     "title": "Transactions",
