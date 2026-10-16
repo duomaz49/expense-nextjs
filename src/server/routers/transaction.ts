@@ -3,6 +3,8 @@ import { db } from "@/db";
 import { category, transaction } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { z } from "zod";
+import { amountSchema } from "../validation";
+import { requireOwnedCategories } from "../category-access";
 
 export const transactionRouter = router({
     getAll: protectedProcedure.query(async ({ ctx }) => {
@@ -19,18 +21,19 @@ export const transactionRouter = router({
                 updatedAt: transaction.updatedAt,
             })
             .from(transaction)
-            .leftJoin(category, eq(transaction.categoryId, category.id))
+            .leftJoin(category, and(eq(transaction.categoryId, category.id), eq(category.userId, ctx.user.id)))
             .where(eq(transaction.userId, ctx.user.id));
     }),
 
     add: protectedProcedure
         .input(z.object({
             date: z.string().check(z.iso.datetime()),
-            amount: z.string(),
+            amount: amountSchema,
             description: z.string(),
             categoryId: z.string().check(z.uuid()).optional()
         }))
         .mutation(async ({ input, ctx }) => {
+            await requireOwnedCategories(ctx.user.id, [input.categoryId]);
             await db.insert(transaction).values({ ...input, userId: ctx.user.id })
         }),
 
@@ -38,12 +41,13 @@ export const transactionRouter = router({
         .input(z.object({
             rows: z.array(z.object({
                 date: z.string().check(z.iso.datetime()),
-                amount: z.string(),
+                amount: amountSchema,
                 description: z.string(),
                 categoryId: z.string().check(z.uuid()).optional()
             })).min(1)
         }))
         .mutation(async ({ input, ctx }) => {
+            await requireOwnedCategories(ctx.user.id, input.rows.map(row => row.categoryId));
             const values = input.rows.map((r) => ({ ...r, userId: ctx.user.id }));
             await db.insert(transaction).values(values);
         }),
@@ -52,13 +56,14 @@ export const transactionRouter = router({
         .input(z.object({
             id: z.string().check(z.uuid()),
             date: z.string().check(z.iso.datetime()),
-            amount: z.string(),
+            amount: amountSchema,
             description: z.string(),
             categoryId: z.string().check(z.uuid()).optional()
         }))
         .mutation(async ({ input, ctx }) => {
+            await requireOwnedCategories(ctx.user.id, [input.categoryId]);
             const { id, ...data } = input;
-            await db.update(transaction).set(data).where(and(eq(transaction.id, id), eq(transaction.userId, ctx.user.id)));
+            await db.update(transaction).set({ ...data, categoryId: data.categoryId ?? null }).where(and(eq(transaction.id, id), eq(transaction.userId, ctx.user.id)));
         }),
 
     delete: protectedProcedure

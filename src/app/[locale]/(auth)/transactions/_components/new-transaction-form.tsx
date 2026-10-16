@@ -66,7 +66,7 @@ export default function NewTransactionForm() {
       date: new Date(values.date).toISOString(),
       amount: signed.toString(),
       description: values.description,
-      categoryId: values.categoryId,
+      categoryId: values.categoryId || undefined,
     });
   };
 

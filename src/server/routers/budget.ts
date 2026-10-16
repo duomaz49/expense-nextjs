@@ -3,6 +3,8 @@ import { db } from "@/db";
 import { budget, category, transaction } from "@/db/schema";
 import { eq, and, gte, lt, sql } from "drizzle-orm";
 import { z } from "zod";
+import { amountSchema } from "../validation";
+import { requireOwnedCategories } from "../category-access";
 
 export const budgetRouter = router({
     getAll: protectedProcedure.query(async ({ ctx }) => {
@@ -26,6 +28,8 @@ export const budgetRouter = router({
                     spent: sql<string>`COALESCE((
                         SELECT -SUM(${transaction.amount}) FROM ${transaction}
                         WHERE ${transaction.categoryId} = ${category.id}
+                          AND ${transaction.userId} = ${ctx.user.id}
+                          AND ${transaction.amount} < 0
                           AND ${transaction.date} >= ${startIso}
                           AND ${transaction.date} < ${endIso}
                     ), 0)`.as("spent"),
@@ -35,6 +39,7 @@ export const budgetRouter = router({
                     budget,
                     and(
                         eq(budget.categoryId, category.id),
+                        eq(budget.userId, ctx.user.id),
                         gte(budget.month, startIso),
                         lt(budget.month, endIso),
                     ),
@@ -44,22 +49,24 @@ export const budgetRouter = router({
 
     add: protectedProcedure
         .input(z.object({
-            amount: z.string(),
+            amount: amountSchema.refine(value => Number(value) >= 0, "Budget cannot be negative"),
             month: z.string().check(z.iso.datetime()),
             categoryId: z.string().check(z.uuid())
         }))
         .mutation(async ({ input, ctx }) => {
+            await requireOwnedCategories(ctx.user.id, [input.categoryId]);
             await db.insert(budget).values({ ...input, userId: ctx.user.id });
         }),
 
     edit: protectedProcedure
         .input(z.object({
             id: z.string().check(z.uuid()),
-            amount: z.string(),
+            amount: amountSchema.refine(value => Number(value) >= 0, "Budget cannot be negative"),
             month: z.string().check(z.iso.datetime()),
             categoryId: z.string().check(z.uuid())
         }))
         .mutation(async ({ input, ctx }) => {
+            await requireOwnedCategories(ctx.user.id, [input.categoryId]);
             const { id, ...data } = input;
             await db.update(budget).set(data).where(and(eq(budget.id, id), eq(budget.userId, ctx.user.id)));
         }),

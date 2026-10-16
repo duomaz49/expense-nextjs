@@ -68,7 +68,7 @@ const ActionCell = ({
       date: new Date(meta.editDraft.date ?? transaction.date).toISOString(),
       amount: meta.editDraft.amount ?? transaction.amount,
       description: meta.editDraft.description ?? transaction.description ?? "",
-      categoryId: meta.editDraft.categoryId ?? transaction.categoryId ?? "",
+      categoryId: (meta.editDraft.categoryId ?? transaction.categoryId) || undefined,
     });
   };
 

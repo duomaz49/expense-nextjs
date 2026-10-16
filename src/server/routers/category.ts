@@ -20,14 +20,16 @@ export const categoryRouter = router({
         name: category.name,
         budget: budget.amount,
         spent: sql<string>`COALESCE((
-          SELECT -SUM(${transaction.amount}) FROM ${transaction}
-          WHERE ${transaction.categoryId} = ${category.id}
+          SELECT SUM(ABS(${transaction.amount})) FROM ${transaction}
+          WHERE ${transaction.amount} < 0 AND ${transaction.categoryId} = ${category.id}
+            AND ${transaction.userId} = ${ctx.user.id}
             AND ${transaction.date} >= ${monthStart}
             AND ${transaction.date} < ${nextMonth}
         ), 0)`.as("spent"),
         txnCount: sql<number>`(
           SELECT COUNT(*)::int FROM ${transaction}
           WHERE ${transaction.categoryId} = ${category.id}
+            AND ${transaction.userId} = ${ctx.user.id}
             AND ${transaction.date} >= ${monthStart}
             AND ${transaction.date} < ${nextMonth}
         )`.as("txn_count"),
@@ -37,6 +39,7 @@ export const categoryRouter = router({
         budget,
         and(
           eq(budget.categoryId, category.id),
+          eq(budget.userId, ctx.user.id),
           gte(budget.month, monthStart),
           lt(budget.month, nextMonth),
         ),
@@ -46,7 +49,7 @@ export const categoryRouter = router({
 
   add: protectedProcedure
     .input(z.object({
-      name: z.string().min(1),
+      name: z.string().trim().min(1),
     }))
     .mutation(async ({ input, ctx }) => {
       const [row] = await db
@@ -59,7 +62,7 @@ export const categoryRouter = router({
   edit: protectedProcedure
     .input(z.object({
       id: z.string().check(z.uuid()),
-      name: z.string().optional(),
+      name: z.string().trim().min(1),
     }))
     .mutation(async ({ input, ctx }) => {
       const { id, ...data } = input;
@@ -69,6 +72,10 @@ export const categoryRouter = router({
   delete: protectedProcedure
     .input(z.string().check(z.uuid()))
     .mutation(async ({ input, ctx }) => {
-      await db.delete(category).where(and(eq(category.id, input), eq(category.userId, ctx.user.id)));
+      await db.batch([
+        db.update(transaction).set({ categoryId: null })
+          .where(and(eq(transaction.categoryId, input), eq(transaction.userId, ctx.user.id))),
+        db.delete(category).where(and(eq(category.id, input), eq(category.userId, ctx.user.id))),
+      ]);
     }),
 });
