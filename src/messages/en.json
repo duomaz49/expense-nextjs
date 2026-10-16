@@ -195,6 +195,7 @@
   },
   "budgets": {
     "title": "Budget",
+    "month": "Budget month",
     "form": {
       "editTitle": "Edit budget",
       "setTitle": "Set budget",

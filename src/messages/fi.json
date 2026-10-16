@@ -195,6 +195,7 @@
   },
   "budgets": {
     "title": "Budjetti",
+    "month": "Budjetin kuukausi",
     "form": {
       "editTitle": "Muokkaa budjettia",
       "setTitle": "Aseta budjetti",

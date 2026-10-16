@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc/client";
 import { toast } from "sonner";
 import BudgetsList, { BudgetOverviewRow } from "./_components/budgets-list";
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/pagination";
 import { useBudgetFormModalStore } from "@/store/budget-form-modal-store";
 import { useConfirmationModalStore } from "@/store/confirmation-modal-store";
-import { formatMonthYear } from "@/lib/formatters";
+import { Input } from "@/components/ui/input";
 
 const firstOfCurrentMonth = () => {
     const now = new Date();
@@ -28,7 +28,6 @@ const shiftMonth = (d: Date, delta: number) =>
 
 export default function BudgetPage() {
     const t = useTranslations("budgets");
-    const locale = useLocale();
     const [monthDate, setMonthDate] = useState<Date>(firstOfCurrentMonth);
     const monthIso = useMemo(() => monthDate.toISOString(), [monthDate]);
 
@@ -73,7 +72,7 @@ export default function BudgetPage() {
 
     return (
         <div className="md:container md:mx-auto mt-5 space-y-4">
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-between gap-4">
                 <h1 className="text-lg font-semibold">{t("title")}</h1>
                 <Pagination className="w-auto mx-0">
                     <PaginationContent>
@@ -85,9 +84,20 @@ export default function BudgetPage() {
                             />
                         </PaginationItem>
                         <PaginationItem>
-                            <span className="px-3 text-sm font-medium min-w-40 text-center">
-                                {formatMonthYear(monthDate, locale)}
-                            </span>
+                            <Input
+                                type="month"
+                                aria-label={t("month")}
+                                className="w-44"
+                                min="0001-01"
+                                max="9999-12"
+                                value={monthIso.slice(0, 7)}
+                                onChange={(event) => {
+                                    const value = event.currentTarget.value;
+                                    if (value && event.currentTarget.validity.valid) {
+                                        setMonthDate(new Date(`${value}-01T00:00:00.000Z`));
+                                    }
+                                }}
+                            />
                         </PaginationItem>
                         <PaginationItem>
                             <PaginationNext
