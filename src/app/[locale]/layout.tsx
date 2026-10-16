@@ -1,19 +1,12 @@
+import "../globals.css";
 import type { Metadata } from "next";
-import { NeonAuthUIProvider } from "@neondatabase/auth/react";
-import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
+import { Geist_Mono, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { authClient } from "@/lib/auth/client";
-import { TRPCProvider } from "@/lib/trpc/client";
 import { routing } from "@/i18n/routing";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-sans" });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -52,19 +45,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={jetbrainsMono.variable} suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistMono.variable} antialiased`}>
         <NextIntlClientProvider>
-          <TRPCProvider>
-            <NeonAuthUIProvider
-              authClient={authClient as never}
-              social={{ providers: ["google"] }}
-              redirectTo="/dashboard"
-              emailOTP
-              defaultTheme="light"
-            >
-              {children}
-            </NeonAuthUIProvider>
-          </TRPCProvider>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
