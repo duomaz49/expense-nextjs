@@ -12,6 +12,8 @@ type ApiState = {signedIn: boolean; categories: Category[]; transactions: Transa
 
 export const test = base.extend<{ api: ApiState }>({
   api: [async ({page}, use) => {
+    const browserErrors: string[] = [];
+    page.on('pageerror', error => browserErrors.push(error.message));
     const state: ApiState = {
       signedIn: true,
       categories: [{id: categoryId, name: 'Food'}],
@@ -58,6 +60,7 @@ export const test = base.extend<{ api: ApiState }>({
       await route.fulfill({json:results});
     });
     await use(state);
+    expect(browserErrors, 'Unhandled browser errors').toEqual([]);
   }, {auto:true}],
 });
 export {expect};

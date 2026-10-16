@@ -6,6 +6,9 @@ import type { TooltipValueType } from "recharts"
 
 import { cn } from "@/lib/utils"
 
+// Redux DevTools cannot safely serialize Recharts' internal React state.
+RechartsPrimitive.Global.devToolsEnabled = false
+
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 

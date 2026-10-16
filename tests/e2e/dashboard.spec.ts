@@ -1,4 +1,16 @@
 import {test,expect} from './fixtures';
+test('chart updates do not connect to a failing Redux DevTools extension', async ({page}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__', {
+      value: () => { throw new TypeError('Redux DevTools must not receive chart state'); },
+    });
+  });
+  await page.goto('/en/dashboard');
+  for (const label of ['This year', 'All time', 'This month']) {
+    await page.getByRole('button', {name: label, exact: true}).click();
+    await expect(page.getByText(`By category · ${label}`, {exact: true})).toBeVisible();
+  }
+});
 test('month/year/all-time drive every dashboard section',async({page,api})=>{
   await page.goto('/en/dashboard');
   for(const [label,period,heading] of [['This month','month','This month · daily'],['This year','year','This year · monthly'],['All time','all','All time · monthly']]) {
